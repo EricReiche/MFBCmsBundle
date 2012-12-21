@@ -1,0 +1,17 @@
+{
+    "name": "mfb/cms-bundle",
+    "description": "Doctrine+Sonata based CMS",
+    "authors": [
+        {
+            "name": "Eric Reiche",
+            "email": "e@reiche.me"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.1.*",
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+    }
+}

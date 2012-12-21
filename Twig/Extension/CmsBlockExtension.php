@@ -7,7 +7,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use MFB\CmsBundle\Service\CmsBlockService;
 
 /**
- * Extension to include CMS blocks
+ * @category   MFB
+ * @package    MFBCmsBundle
+ * @author     Eric Reiche <e@reiche.me>
+ * @author     MFB MeinFernbus GmbH <kontakt@meinfernbus.de>
+ * @copyright  2012 MFB MeinFernbus GmbH
+ * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link       https://github.com/meinfernbusde/MFBCmsBundle
+ *
+ * Twig extension to include CMS blocks in templates
  */
 class CmsBlockExtension extends \Twig_Extension
 {

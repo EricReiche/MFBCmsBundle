@@ -11,6 +11,14 @@ use MFB\CmsBundle\Entity\Block,
     MFB\CmsBundle\Entity\Types\BlockTypeType;
 
 /**
+ * @category   MFB
+ * @package    MFBCmsBundle
+ * @author     Eric Reiche <e@reiche.me>
+ * @author     MFB MeinFernbus GmbH <kontakt@meinfernbus.de>
+ * @copyright  2012 MFB MeinFernbus GmbH
+ * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link       https://github.com/meinfernbusde/MFBCmsBundle
+ *
  * Block fixtures
  */
 class LoadBlockData extends AbstractFixture implements OrderedFixtureInterface

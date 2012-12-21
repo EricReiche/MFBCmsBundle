@@ -9,6 +9,14 @@ use MFB\CmsBundle\Entity\Types\BlockTypeType,
     MFB\CmsBundle\Entity\Types\BlockStatusType;
 
 /**
+ * @category   MFB
+ * @package    MFBCmsBundle
+ * @author     Eric Reiche <e@reiche.me>
+ * @author     MFB MeinFernbus GmbH <kontakt@meinfernbus.de>
+ * @copyright  2012 MFB MeinFernbus GmbH
+ * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link       https://github.com/meinfernbusde/MFBCmsBundle
+ *
  * MFB\CmsBundle\Entity\Block
  *
  * @ORM\Table(name="blocks")
