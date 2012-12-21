@@ -12,6 +12,6 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "sonata-project/admin-bundle": "dev-master",
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master"
     }
 }
