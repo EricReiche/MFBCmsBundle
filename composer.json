@@ -27,5 +27,5 @@
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
         "liip/doctrine-cache-bundle": "dev-master"
     },
-    "target-dir": "MFB/CmsBundle",
+    "target-dir": "MFB/CmsBundle"
 }
