@@ -25,7 +25,8 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
-        "liip/doctrine-cache-bundle": "dev-master"
+        "liip/doctrine-cache-bundle": "dev-master",
+        "presta/sitemap-bundle": "dev-master"
     },
     "target-dir": "MFB/CmsBundle",
     "autoload": {
