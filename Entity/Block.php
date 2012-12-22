@@ -54,20 +54,14 @@ class Block
     protected $content;
 
     /**
-     * @ORM\Column(name="type", type="BlockTypeType", nullable=false)
-     * @EnumAssert\DoctrineEnumType(
-     *    entity="MFB\CmsBundle\Entity\Types\BlockTypeType"
-     * )
+     * @ORM\Column(name="type", type="string", length=255, nullable=false)
      *
      * @var string $type
      */
     protected $type = BlockTypeType::TEXT;
 
     /**
-     * @ORM\Column(name="status", type="BlockStatusType", nullable=false)
-     * @EnumAssert\DoctrineEnumType(
-     *    entity="MFB\CmsBundle\Entity\Types\BlockStatusType"
-     * )
+     * @ORM\Column(name="status", type="string", length=255, nullable=false)
      *
      * @var string $status
      */
