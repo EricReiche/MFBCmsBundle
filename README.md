@@ -8,7 +8,6 @@ This bundle offers some CMS functionality
 # Dependencies
 
  Depends on TwigStringBundle & Presta Sitemap Bundle.
- The cms blocks are put in memcache. This is an interim solution and should be replaced by ESI.
 
 # Installation
 
@@ -24,13 +23,19 @@ run composer update
 composer.phar update
 ```
 
- Add the following to your routing.yml
+ Add the following to the end of your routing.yml
 
 ```yaml
 mfb_cms:
     resource: "@MFBCmsBundle/Controller/"
     type:     annotation
     prefix:   /
+
+mfb_content_show:
+    pattern:   /{slug}
+    defaults:  { _controller: MFBCmsBundle:Page:show }
+    requirements:
+        slug:  .+
 ```
 
 Create a app/Resources/views/layout_pages.html.twig which is extended by the templates.
