@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use MFB\CmsBundle\Entity\Page;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @category   MFB
@@ -29,7 +31,9 @@ class PageController extends Controller
 
         $repo = $em->getRepository('MFBCmsBundle:Page');
         $content = $repo->findOneBy(array('slug' => $slug));
-
-        return array('content' => $content);
+        if ($content instanceof Page) {
+            return array('page' => $content);
+        }
+        throw new NotFoundHttpException();
     }
 }
