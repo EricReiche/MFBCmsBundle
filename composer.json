@@ -27,8 +27,7 @@
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
         "presta/sitemap-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "1.1.*@dev",
-        "jms/serializer-bundle": "dev-master",
-        "jms/di-extra-bundle": "dev-master"
+        "jms/serializer-bundle": "1.0.*@dev"
     },
     "target-dir": "MFB/CmsBundle",
     "autoload": {
