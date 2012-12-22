@@ -3,7 +3,6 @@
 namespace MFB\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Smurfy\DoctrineEnumBundle\Validator as EnumAssert;
 
 use MFB\CmsBundle\Entity\Types\BlockTypeType,
     MFB\CmsBundle\Entity\Types\BlockStatusType;

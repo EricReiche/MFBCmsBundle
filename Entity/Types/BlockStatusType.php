@@ -3,7 +3,6 @@
 namespace MFB\CmsBundle\Entity\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Smurfy\DoctrineEnumBundle\DBAL\Types\DoctrineEnumTypeAbstract;
 
 /**
  * @category   MFB
@@ -16,7 +15,7 @@ use Smurfy\DoctrineEnumBundle\DBAL\Types\DoctrineEnumTypeAbstract;
  *
  * Enum block status
  */
-class BlockStatusType extends DoctrineEnumTypeAbstract
+class BlockStatusType
 {
     /**
      * @var string
