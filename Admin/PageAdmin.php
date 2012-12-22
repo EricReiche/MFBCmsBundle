@@ -54,6 +54,7 @@ class PageAdmin extends Admin
         $formMapper
             ->with('General')
             ->add('releasedAt', null, array('required' => true))
+            ->add('slug', null, array('required' => true))
             ->add('title', null, array('required' => true))
             ->add('active', null, array('required' => false))
             ->end();
