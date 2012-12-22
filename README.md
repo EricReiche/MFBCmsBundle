@@ -4,10 +4,13 @@ This bundle offers some CMS functionality
 
  - Dynamic blocks: Include "templates" from DataBase anywhere on the page
  - Press releases: Kind of a "news" system for press releases. There is a "current" page which displays the newest release and an "archive" which contains a list of all past releases with the teaser content.
+ - News: basic implementation of a blog/news system.
+ - Pages: Static content pages
+ - Menu: Navigation tree
 
 # Dependencies
 
- Depends on TwigStringBundle & Presta Sitemap Bundle.
+Depends on doctrine extensions (nested sets tree for menu), TwigStringBundle (blocks) & Presta Sitemap Bundle.
 
 # Installation
 
@@ -15,11 +18,32 @@ This bundle offers some CMS functionality
 
 ```yaml
 lk_twigstring: ~
+
+stof_doctrine_extensions:
+    default_locale: de_DE
+
+    # Only used if you activated the Uploadable extension
+    uploadable:
+        # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
+        default_file_path:       %kernel.root_dir%/../web/uploads
+
+        # Mime type guesser class: Optional. By default, we provide an adapter for the one present in the HttpFoundation component of Symfony
+        mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
+
+        # Default file info class implementing FileInfoInterface: Optional. By default we provide a class which is prepared to receive an UploadedFile instance.
+        default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+    orm:
+        default:
+            tree: true
+            timestampable: true
+            translatable: true
+            sluggable: true
+            loggable: true
 ```
 
 run composer update
 
-```
+```sh
 composer.phar update
 ```
 
@@ -38,4 +62,4 @@ mfb_content_show:
         slug:  .+
 ```
 
-Create a app/Resources/views/layout_pages.html.twig which is extended by the templates.
+Create an app/Resources/views/layout_pages.html.twig which is extended by the templates.

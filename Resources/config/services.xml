@@ -24,6 +24,9 @@
         <parameter key="mfb_cms.admin.news.entity">MFB\CmsBundle\Entity\News</parameter>
         <parameter key="mfb_cms.admin.page.class">MFB\CmsBundle\Admin\PageAdmin</parameter>
         <parameter key="mfb_cms.admin.page.entity">MFB\CmsBundle\Entity\Page</parameter>
+        <parameter key="mfb_cms.admin.menu.class">MFB\CmsBundle\Admin\MenuAdmin</parameter>
+        <parameter key="mfb_cms.admin.menu.entity">MFB\CmsBundle\Entity\MenuNode</parameter>
+        <parameter key="mfb_cms.admin.menu.controller">MFBCmsBundle:MenuAdmin</parameter>
 
         <parameter key="mfb_cms.service.cms_block.class">MFB\CmsBundle\Service\CmsBlockService</parameter>
         <parameter key="mfb_cms.twig.cms_block.extension.class">MFB\CmsBundle\Twig\Extension\CmsBlockExtension</parameter>
@@ -55,6 +58,13 @@
             <argument/>
             <argument>%mfb_cms.admin.page.entity%</argument>
             <argument/>
+        </service>
+
+        <service id="mfb_cms.admin.menu" class="%mfb_cms.admin.menu.class%">
+            <tag name="sonata.admin" manager_type="orm" group="CMS" label="Menu"/>
+            <argument/>
+            <argument>%mfb_cms.admin.menu.entity%</argument>
+            <argument>%mfb_cms.admin.menu.controller%</argument>
         </service>
 
         <service id="twig.extension.cms_block" class="%mfb_cms.twig.cms_block.extension.class%" public="true">
