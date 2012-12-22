@@ -23,3 +23,14 @@ run composer update
 ```
 composer.phar update
 ```
+
+ Add the following to your routing.yml
+
+```yaml
+mfb_cms:
+    resource: "@MFBCmsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+```
+
+Create a app/Resources/views/layout_pages.html.twig which is extended by the templates.

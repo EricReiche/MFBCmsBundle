@@ -1,0 +1,26 @@
+{#
+/**
+ * @category   MFB
+ * @package    MFBCmsBundle
+ * @author     Eric Reiche <e@reiche.me>
+ * @author     MFB MeinFernbus GmbH <kontakt@meinfernbus.de>
+ * @copyright  2012 MFB MeinFernbus GmbH
+ * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link       https://github.com/meinfernbusde/MFBCmsBundle
+ */
+ #}
+{% extends '::layout_pages.html.twig' %}
+
+{% block title %}{{ "News archive"|trans }}{% endblock %}
+
+{% block content %}
+    {% for post in news %}
+        <h4>
+            <a href="{{ path('news_show', {'id': post.id}) }}">{{ post.title }}</a>
+        </h4>
+        <strong>{{ post.subTitle|raw }}</strong>
+        <br/>
+        {{ post.releasedAt|date("d.m.Y") }}
+        <br/><br/>
+    {% endfor %}
+{% endblock %}
