@@ -7,7 +7,7 @@ This bundle offers some CMS functionality
 
 # Dependencies
 
- Depends on memcached, TwigStringBundle, Doctrine Cache Bundle & Presta Sitemap Bundle.
+ Depends on TwigStringBundle & Presta Sitemap Bundle.
  The cms blocks are put in memcache. This is an interim solution and should be replaced by ESI.
 
 # Installation
@@ -16,17 +16,6 @@ This bundle offers some CMS functionality
 
 ```yaml
 lk_twigstring: ~
-
-liip_doctrine_cache:
-    namespaces:
-        # name of the service (aka liip_doctrine_cache.ns.mc)
-        mc:
-            namespace: mfb
-            type: memcache
-            # name of a service of class Memcached that is fully configured (optional)
-            # id: my_memcached_service
-            port: 11211
-            host: localhost
 ```
 
 run composer update
