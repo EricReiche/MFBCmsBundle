@@ -26,8 +26,7 @@
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
         "presta/sitemap-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "1.1.*@dev",
-        "jms/serializer-bundle": "1.0.*@dev"
+        "stof/doctrine-extensions-bundle": "1.1.*@dev"
     },
     "target-dir": "MFB/CmsBundle",
     "autoload": {
