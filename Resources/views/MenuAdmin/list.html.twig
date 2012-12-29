@@ -10,5 +10,14 @@
 {% endblock%}
 
 {% block list_table %}
-asdf
+    <div id="tree"></div>
+    <script type="text/javascript">
+        $("#tree").dynatree({
+            initAjax: {url: "{{ admin.generateUrl('ajax_tree') }}",
+                data: {key: "root", // Optional arguments to append to the url
+                    mode: "all"
+                }
+            }
+        });
+    </script>
 {% endblock %}

@@ -38,24 +38,37 @@ class MenuAdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        /**
-         * @var $em \Doctrine\ORM\EntityManager
-         */
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $request = $this->get('request');
-        $repository = $em->getRepository($this->admin->getClass());
-
-        //somehow need to order by parent id, but doesnt seem to work this way
-        $qb = $repository->createQueryBuilder('m')
-            ->addOrderBy('m.root')
-            ->addOrderBy('m.lft');
-
         return $this->render(
             'MFBCmsBundle:MenuAdmin:list.html.twig', array(
-            'data' => $qb->getQuery()->getResult(),
             'action' => 'list'
         ));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function ajaxTreeAction()
+    {
+        /**
+         * @var $em   \Doctrine\ORM\EntityManager
+         * @var $repo \Gedmo\Tree\Entity\Repository\NestedTreeRepository
+         */
+        $em = $this->getDoctrine()->getEntityManager();
+        $repo = $em->getRepository($this->admin->getClass());
+
+        $query = $em
+            ->createQueryBuilder()
+            ->select('node')
+            ->from($this->admin->getClass(), 'node')
+            ->orderBy('node.root, node.lft', 'ASC')
+            ->getQuery();
+        $repo->setChildrenIndex('children');
+        $tree = $repo->buildTree($query->getArrayResult(), array('decorate' => false));
+
+
+        $data = $this->get('serializer')->serialize($tree, 'json');
+
+        return new Response($data);
     }
 
 //    /**

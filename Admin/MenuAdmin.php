@@ -38,7 +38,7 @@ class MenuAdmin extends Admin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-//        $collection->add('move_up', 'move-up/{id}');
+        $collection->add('ajax_tree');
         $collection->remove('create');
         $collection->remove('edit');
         $collection->remove('show');

@@ -38,19 +38,19 @@ class MenuNode
     private $linkPlain;
 
     /**
-     * @ORM\Column(name="link_type", type="string", length=64)
+     * @ORM\Column(name="link_type", type="string", length=64, nullable=true)
      *
      * @see Types\MenuNodeLinkTypeTypem
      */
     private $linkType;
 
     /**
-     * @ORM\Column(name="link_path", type="string", length=255)
+     * @ORM\Column(name="link_path", type="string", length=255, nullable=true)
      */
     private $linkPath;
 
     /**
-     * @ORM\Column(name="link_arguments", type="array")
+     * @ORM\Column(name="link_arguments", type="array", nullable=true)
      */
     private $linkArguments;
 
