@@ -39,6 +39,9 @@ class MenuAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('ajax_tree');
+        $collection->add('ajax_add');
+        $collection->add('ajax_save');
+        $collection->add('ajax_delete');
         $collection->remove('create');
         $collection->remove('edit');
         $collection->remove('show');
