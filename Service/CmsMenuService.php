@@ -114,7 +114,7 @@ class CmsMenuService
 
         $qb = $this->em
             ->createQueryBuilder()
-            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root, node.linkPlain')
+            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root, node.linkPlain, node.linkType')
             ->from(self::ENTITY, 'node')
             ->orderBy('node.root, node.lft', 'ASC');
 

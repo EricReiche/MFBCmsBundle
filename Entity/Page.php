@@ -39,6 +39,13 @@ class Page
     protected $title;
 
     /**
+     * @var string $content
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    protected $content;
+
+    /**
      * @var string $slug
      *
      * @ORM\Column(name="slug", type="string", length=255)
@@ -113,6 +120,26 @@ class Page
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**

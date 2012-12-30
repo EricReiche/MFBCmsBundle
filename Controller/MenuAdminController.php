@@ -2,6 +2,7 @@
 
 namespace MFB\CmsBundle\Controller;
 
+use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use MFB\CmsBundle\Entity\MenuNode;
 use Symfony\Component\HttpFoundation\Response;
@@ -167,6 +168,7 @@ class MenuAdminController extends Controller
         $form = $this->createFormBuilder($node)
             ->add('title', 'text')
             ->add('linkPlain', 'text')
+            ->add('linkType', 'choice', array('choices' => MenuNodeLinkTypeType::getChoices()))
             ->getForm();
 
         if ($request->isMethod('POST')) {

@@ -24,6 +24,8 @@ class MenuNodeLinkTypeType
 
     const TEXT = 'text';
     const PATH = 'path';
+    const SEPARATOR = 'separator';
+    const NOLINK = 'nolink';
 
     /**
      * @var array
@@ -31,6 +33,8 @@ class MenuNodeLinkTypeType
     public static $choices = array(
         self::TEXT => 'Text',
         self::PATH => 'Path',
+        self::SEPARATOR => 'Separator',
+        self::NOLINK => 'Unlinked',
     );
 
     /**

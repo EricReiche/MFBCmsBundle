@@ -57,6 +57,7 @@ class PageAdmin extends Admin
             ->add('slug', null, array('required' => true))
             ->add('title', null, array('required' => true))
             ->add('active', null, array('required' => false))
+            ->add('content', null, array('required' => true))
             ->end();
     }
 }

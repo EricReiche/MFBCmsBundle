@@ -1,4 +1,4 @@
-Slug: Kurzname
+Slug: URL
 Title: Titel
 Content: Inhalt
 Type: Typ
@@ -25,3 +25,8 @@ Page List: Seitenliste
 Page Create: Seite anlegen
 Page Edit: Seite bearbeiten
 Pages: Seiten
+Linktype: Linktyp
+Text: Text
+Unlinked: Nicht verlinkt
+Path: Pfad
+Separator: Teiler
