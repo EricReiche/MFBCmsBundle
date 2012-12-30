@@ -96,8 +96,11 @@ function loading(start)
 
 function loadEditForm(node)
 {
+    loading(true);
     var nodeId = node.data.id;
     $('#edit').load(treeFormUrl, 'id=' + nodeId, function() {
+
+        loading(false);
         $('#editForm').ajaxForm({
             success: function(responseText, statusText, xhr, $form) {
                 node.tree.reload();
