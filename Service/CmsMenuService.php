@@ -70,7 +70,7 @@ class CmsMenuService
         if (!($node instanceof MenuNode)) {
             return '<!-- Root node with id "' . $name . '" not found -->';
         }
-        $menu = $this->loadTree($node);
+        $menu = $this->loadTree($node, true);
         $menu = array_shift($menu);
         $data = array('menu' => $menu);
 
@@ -104,10 +104,11 @@ class CmsMenuService
 
     /**
      * @param MenuNode $node
+     * @param bool     $activeOnly
      *
-     * @return array
+     * @return array|string
      */
-    public function loadTree($node = null)
+    public function loadTree($node = null, $activeOnly = false)
     {
         /** @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo */
         $repo = $this->em->getRepository(self::ENTITY);
@@ -121,6 +122,9 @@ class CmsMenuService
         if ($node instanceof MenuNode) {
             $qb->andWhere('node.root = :root')
                 ->setParameter('root', $node->getRoot());
+        }
+        if ($activeOnly) {
+            $qb->andWhere('node.active = true');
         }
         $query = $qb->getQuery();
         $repo->setChildrenIndex('children');

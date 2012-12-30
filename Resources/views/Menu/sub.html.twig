@@ -1,40 +1,38 @@
-{% if node.select %}
-    {% if node.children is defined and node.children|length > 0 %}
-        {% set hasChildren = true %}
-        {% set ddArrow = "<b class=\"caret\"></b>" %}
-        {% set liClass = " class=\"dropdown\"" %}
-        {% set aClass = " class=\"dropdown-toggle\" data-toggle=\"dropdown\"" %}
-    {% else %}
-        {% set hasChildren = false %}
-        {% set ddArrow = "" %}
-        {% set liClass = "" %}
-        {% set aClass = "" %}
-    {% endif %}
-
-    {% if node.linkType == "text" %}
-        <li{{ liClass }}><a href="{{ node.linkPlain }}"{{ aClass }}>{{ node.title|raw }}
-    {% elseif node.linkType == "path" %}
-        <li{{ liClass }}><a href="{{ node.linkPlain }}"{{ aClass }}>{{ node.title|raw }}
-    {% elseif node.linkType == "separator" %}
-        <li class="divider">
-    {% elseif node.linkType == "nolink" %}
-        <li{{ liClass }}><span>{{ node.title|raw }}</span>
-    {% endif %}
-
-    {{ ddArrow }}
-
-    {% if node.linkType == "text" or node.linkType == "path" %}
-        </a>
-    {% endif %}
-    {% if hasChildren %}
-        <ul class="dropdown-menu">
-            {% for child in node.children %}
-                {% include 'MFBCmsBundle:Menu:sub.html.twig'
-                with {'node': child}
-                %}
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    </li>
+{% if node.children is defined and node.children|length > 0 %}
+    {% set hasChildren = true %}
+    {% set ddArrow = "<b class=\"caret\"></b>" %}
+    {% set liClass = " class=\"dropdown\"" %}
+    {% set aClass = " class=\"dropdown-toggle\" data-toggle=\"dropdown\"" %}
+{% else %}
+    {% set hasChildren = false %}
+    {% set ddArrow = "" %}
+    {% set liClass = "" %}
+    {% set aClass = "" %}
 {% endif %}
+
+{% if node.linkType == "text" %}
+    <li{{ liClass|raw }}><a href="{{ node.linkPlain }}"{{ aClass|raw }}>{{ node.title|raw }}
+{% elseif node.linkType == "path" %}
+    <li{{ liClass|raw }}><a href="{{ node.linkPlain }}"{{ aClass|raw }}>{{ node.title|raw }}
+{% elseif node.linkType == "separator" %}
+    <li class="divider">
+{% elseif node.linkType == "nolink" %}
+    <li{{ liClass }}><span>{{ node.title|raw }}</span>
+{% endif %}
+
+{{ ddArrow|raw }}
+
+{% if node.linkType == "text" or node.linkType == "path" %}
+    </a>
+{% endif %}
+{% if hasChildren %}
+    <ul class="dropdown-menu">
+        {% for child in node.children %}
+            {% include 'MFBCmsBundle:Menu:sub.html.twig'
+            with {'node': child}
+            %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+</li>
