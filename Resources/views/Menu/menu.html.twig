@@ -1,4 +1,4 @@
-{% if menu.children is defined and menu.children|length > 0 %}
+{% if menu.children is defined and menu.children|length > 0 and menu.select == true %}
     <ul class="nav">
         {% for node in menu.children %}
             {% include 'MFBCmsBundle:Menu:sub.html.twig'

@@ -1,14 +1,15 @@
-{% if node.children is defined and node.children|length > 0 %}
-    {% set hasChildren = true %}
-    {% set ddArrow = "<b class=\"caret\"></b>" %}
-    {% set liClass = " class=\"dropdown\"" %}
-    {% set aClass = " class=\"dropdown-toggle\" data-toggle=\"dropdown\"" %}
-{% else %}
-    {% set hasChildren = false %}
-    {% set ddArrow = "" %}
-    {% set liClass = "" %}
-    {% set aClass = "" %}
-{% endif %}
+{% if node.select %}
+    {% if node.children is defined and node.children|length > 0 %}
+        {% set hasChildren = true %}
+        {% set ddArrow = "<b class=\"caret\"></b>" %}
+        {% set liClass = " class=\"dropdown\"" %}
+        {% set aClass = " class=\"dropdown-toggle\" data-toggle=\"dropdown\"" %}
+    {% else %}
+        {% set hasChildren = false %}
+        {% set ddArrow = "" %}
+        {% set liClass = "" %}
+        {% set aClass = "" %}
+    {% endif %}
 
     {% if node.linkType == "text" %}
         <li{{ liClass }}><a href="{{ node.linkPlain }}"{{ aClass }}>{{ node.title|raw }}
@@ -36,3 +37,4 @@
     {% endif %}
 
     </li>
+{% endif %}
