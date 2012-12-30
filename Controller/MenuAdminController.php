@@ -55,6 +55,14 @@ class MenuAdminController extends Controller
             throw new AccessDeniedException();
         }
 
+        return new Response($this->loadJsonTree());
+    }
+
+    /**
+     * @return string (json)
+     */
+    protected function loadJsonTree()
+    {
         /**
          * @var \Doctrine\ORM\EntityManager                        $em
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
@@ -79,9 +87,7 @@ class MenuAdminController extends Controller
 
         $tree = $repo->buildTree($result, array('decorate' => false));
 
-        $data = $this->get('serializer')->serialize($tree, 'json');
-
-        return new Response($data);
+        return $this->get('serializer')->serialize($tree, 'json');
     }
 
     /**
@@ -109,13 +115,14 @@ class MenuAdminController extends Controller
         $newNode = new MenuNode();
         $newNode->setLinkPlain('/');
         $newNode->setTitle('NewNode');
+        $newNode->setActive(false);
 
         if (is_numeric($prevId)) {
             $prevNode = $repo->find($prevId);
             $repo->persistAsPrevSiblingOf($newNode, $prevNode);
         } elseif (is_numeric($parentId)) {
             $parentNode = $repo->find($parentId);
-            $repo->persistAsLastChildOf($newNode, $parentNode);
+            $repo->persistAsFirstChildOf($newNode, $parentNode);
         } else {
             return new Response(json_encode(false));
         }
@@ -177,6 +184,7 @@ class MenuAdminController extends Controller
          * @var \Doctrine\ORM\EntityManager                        $em
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
          * @var MenuNode                                           $node
+         * @var MenuNode                                           $parentNode
          */
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository($this->admin->getClass());

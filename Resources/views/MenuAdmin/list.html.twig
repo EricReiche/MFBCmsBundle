@@ -36,27 +36,24 @@
         var treeSaveUrl = "{{ admin.generateUrl('ajax_save') }}";
         var treeListUrl = "{{ admin.generateUrl('ajax_tree') }}";
 
-        $("#tree").dynatree({
-            persist: true,
-            checkbox: true,
-            minExpandLevel: 3,
-            selectMode: 2,
-            onPostInit: function(isReloading, isError) {
-                this.reactivate();
-                loading(false)
-            },
-            onActivate: function(node) {
-                var isInitializing = node.tree.isInitializing(); // Tree loading phase
-                var isReloading = node.tree.isReloading(); // Loading phase, and reading status from cookies
-                var isUserEvent = node.tree.isUserEvent(); // Event was triggered by mouse or keyboard
-            },
-            postProcess: function(data, dataType) {
-                loading(true)
-            },
-            onSelect: function(flag, dtnode) {
-                selectNode(flag, dtnode)
-            },
-            initAjax: {url: treeListUrl}
+        $(document).ready(function() {
+            $("#tree").dynatree({
+                persist: false,
+                checkbox: true,
+                minExpandLevel: 3,
+                selectMode: 2,
+                debugLevel: 2,
+                onPostInit: function(isReloading, isError) {
+                    loading(false)
+                },
+                postProcess: function(data, dataType) {
+                    loading(true)
+                },
+                onSelect: function(flag, dtnode) {
+                    selectNode(flag, dtnode)
+                },
+                initAjax: {url: treeListUrl}
+            });
         });
     </script>
 {% endblock %}
