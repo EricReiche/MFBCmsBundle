@@ -220,9 +220,9 @@ class MenuAdminController extends Controller
             ->setParameter('right', $node->getRgt())
             ->getQuery();
         foreach ($query->getResult() as $child) {
-            $em->remove($child);
+            $repo->removeFromTree($child);
         }
-        $em->remove($node);
+        $repo->removeFromTree($node);
 
         $repo->verify();
         $repo->recover();
