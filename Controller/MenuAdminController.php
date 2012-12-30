@@ -55,7 +55,7 @@ class MenuAdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        return new Response($this->loadJsonTree());
+        return new Response($this->get('mfb_cms.service.cms_menu')->loadJsonTree());
     }
 
     /**
@@ -207,19 +207,8 @@ class MenuAdminController extends Controller
         $repo = $em->getRepository($this->admin->getClass());
         $node = $repo->find($id);
 
-        $query = $em
-            ->createQueryBuilder()
-            ->select('node')
-            ->from($this->admin->getClass(), 'node')
-            ->orderBy('node.root, node.lft', 'ASC')
-            ->andWhere('node.root = :root')
-            ->andWhere('node.lft > :left')
-            ->andWhere('node.rgt < :right')
-            ->setParameter('root', $node->getRoot())
-            ->setParameter('left', $node->getLft())
-            ->setParameter('right', $node->getRgt())
-            ->getQuery();
-        foreach ($query->getResult() as $child) {
+
+        foreach ($this->get('mfb_cms.service.cms_menu')->loadAllChildren($node) as $child) {
             $repo->removeFromTree($child);
         }
         $repo->removeFromTree($node);
@@ -229,39 +218,5 @@ class MenuAdminController extends Controller
         $em->flush();
 
         return new Response(json_encode(true));
-    }
-
-    /**
-     * @return string (json)
-     */
-    protected function loadJsonTree()
-    {
-        /**
-         * @var \Doctrine\ORM\EntityManager                        $em
-         * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
-         */
-        $em = $this->getDoctrine()->getEntityManager();
-        $repo = $em->getRepository($this->admin->getClass());
-
-        $query = $em
-            ->createQueryBuilder()
-            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root')
-            ->from($this->admin->getClass(), 'node')
-            ->orderBy('node.root, node.lft', 'ASC')
-            ->getQuery();
-        $repo->setChildrenIndex('children');
-        $result = $query->getArrayResult();
-
-        foreach ($result as $key => $node) {
-            $result[$key]['select'] = $node['active'];
-            $result[$key]['key'] = $node['id'];
-            unset($result[$key]['active']);
-
-            $result[$key]['isFolder'] = ($node['lvl'] == 0);
-        }
-
-        $tree = $repo->buildTree($result, array('decorate' => false));
-
-        return $this->get('serializer')->serialize($tree, 'json');
     }
 }

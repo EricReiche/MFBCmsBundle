@@ -30,6 +30,9 @@
 
         <parameter key="mfb_cms.service.cms_block.class">MFB\CmsBundle\Service\CmsBlockService</parameter>
         <parameter key="mfb_cms.twig.cms_block.extension.class">MFB\CmsBundle\Twig\Extension\CmsBlockExtension</parameter>
+
+        <parameter key="mfb_cms.service.cms_menu.class">MFB\CmsBundle\Service\CmsMenuService</parameter>
+        <parameter key="mfb_cms.twig.cms_menu.extension.class">MFB\CmsBundle\Twig\Extension\CmsMenuExtension</parameter>
     </parameters>
 
     <services>
@@ -72,10 +75,20 @@
             <argument type="service" id="mfb_cms.service.cms_block" />
         </service>
 
+        <service id="twig.extension.cms_menu" class="%mfb_cms.twig.cms_menu.extension.class%" public="true">
+            <tag name="twig.extension"/>
+            <argument type="service" id="mfb_cms.service.cms_menu" />
+        </service>
+
         <service id="mfb_cms.service.cms_block" class="%mfb_cms.service.cms_block.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="twigstring"/>
-            <argument type="service" id="kernel"/>
+        </service>
+
+        <service id="mfb_cms.service.cms_menu" class="%mfb_cms.service.cms_menu.class%">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="serializer"/>
         </service>
     </services>
 </container>

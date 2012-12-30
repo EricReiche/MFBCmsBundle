@@ -4,8 +4,6 @@ namespace MFB\CmsBundle\Service;
 
 use MFB\CmsBundle\Entity\Block;
 
-use Doctrine\Common\Cache\AbstractCache;
-
 use Doctrine\ORM\EntityManager;
 
 use Symfony\Bundle\TwigBundle\TwigEngine;
@@ -38,11 +36,10 @@ class CmsBlockService
     /**
      * @param EntityManager $em         Entity manager
      * @param TwigEngine    $twigstring Twig engine
-     * @param \AppKernel    $kernel
      *
      * @return CmsBlockService
      */
-    public function __construct(EntityManager $em, TwigEngine $twigstring, $kernel)
+    public function __construct(EntityManager $em, TwigEngine $twigstring)
     {
         $this->em          = $em;
         $this->twigstring  = $twigstring;

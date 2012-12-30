@@ -1,0 +1,12 @@
+<li>
+    <a href="{{ node.linkPlain }}">{{ node.title }}</a>
+    {% if node.children is defined and node.children|length > 0 %}
+        <ul class="nav">
+            {% for child in node.children %}
+                {% include 'MFBCmsBundle:Menu:sub.html.twig'
+                    with {'node': child}
+                %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>
