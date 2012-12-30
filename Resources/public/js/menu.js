@@ -4,6 +4,11 @@ function deleteTreeChild()
 
     var node = $("#tree").dynatree("getActiveNode");
 
+    if (node.data.lvl < 1) {
+        alert('Can\'t delete root node.');
+        return false;
+    }
+
     $.ajax({
         type: "POST",
         url: treeDeleteUrl,
@@ -20,6 +25,12 @@ function deleteTreeChild()
             alert('Sorry, something went wrong.');
         }
     });
+    return true;
+}
+
+function refreshTree()
+{
+    $("#tree").dynatree("getTree").reload();
 }
 
 function addTreeChild()
