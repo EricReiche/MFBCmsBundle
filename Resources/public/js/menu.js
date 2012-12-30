@@ -1,13 +1,10 @@
+var treeNodeId = "#tree";
+
 function deleteTreeChild()
 {
     loading(true);
 
-    var node = $("#tree").dynatree("getActiveNode");
-
-    if (node.data.lvl < 1) {
-        alert('Can\'t delete root node.');
-        return false;
-    }
+    var node = $(treeNodeId).dynatree("getActiveNode");
 
     $.ajax({
         type: "POST",
@@ -30,14 +27,14 @@ function deleteTreeChild()
 
 function refreshTree()
 {
-    $("#tree").dynatree("getTree").reload();
+    $(treeNodeId).dynatree("getTree").reload();
 }
 
 function addTreeChild()
 {
     loading(true);
 
-    var node = $("#tree").dynatree("getActiveNode");
+    var node = $(treeNodeId).dynatree("getActiveNode");
 
     var childNode = node.addChild({
         title: "New node"
@@ -63,13 +60,31 @@ function addTreeChild()
         data: 'prev=' + prevId +
             '&parent=' + parentId,
         success: function(msg){
-            tree = node.tree;
-            tree.reload();
+            refreshTree();
             tree.activateKey(msg.key);
         },
         error: function(msg){
-            tree = node.tree;
-            tree.reload();
+            refreshTree();
+            alert('Sorry, something went wrong.');
+        }
+    });
+}
+
+function addTreeRoot()
+{
+    loading(true);
+
+    $.ajax({
+        type: "POST",
+        url: treeAddUrl,
+        dataType: 'json',
+        data: 'root=1',
+        success: function(msg){
+            refreshTree();
+            tree.activateKey(msg.key);
+        },
+        error: function(msg){
+            refreshTree();
             alert('Sorry, something went wrong.');
         }
     });
@@ -87,8 +102,7 @@ function selectNode(flag, dtnode)
             loading(false);
         },
         error: function(msg){
-            tree = node.tree;
-            tree.reload();
+            refreshTree();
             alert('Sorry, something went wrong.');
         }
     });
@@ -114,7 +128,7 @@ function loadEditForm(node)
         loading(false);
         $('#editForm').ajaxForm({
             success: function(responseText, statusText, xhr, $form) {
-                node.tree.reload();
+                refreshTree();
                 $('#edit').text('');
             },
             target: '#edit'
@@ -124,7 +138,7 @@ function loadEditForm(node)
 }
 
 $(document).ready(function() {
-    $("#tree").dynatree({
+    $(treeNodeId).dynatree({
         persist: false,
         checkbox: true,
         minExpandLevel: 3,

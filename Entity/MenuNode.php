@@ -111,6 +111,21 @@ class MenuNode
         return $this->title;
     }
 
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
     public function setParent(MenuNode $parent = null)
     {
         $this->parent = $parent;

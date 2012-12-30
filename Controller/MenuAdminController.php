@@ -59,38 +59,6 @@ class MenuAdminController extends Controller
     }
 
     /**
-     * @return string (json)
-     */
-    protected function loadJsonTree()
-    {
-        /**
-         * @var \Doctrine\ORM\EntityManager                        $em
-         * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
-         */
-        $em = $this->getDoctrine()->getEntityManager();
-        $repo = $em->getRepository($this->admin->getClass());
-
-        $query = $em
-            ->createQueryBuilder()
-            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root')
-            ->from($this->admin->getClass(), 'node')
-            ->orderBy('node.root, node.lft', 'ASC')
-            ->getQuery();
-        $repo->setChildrenIndex('children');
-        $result = $query->getArrayResult();
-
-        foreach ($result as $key => $node) {
-            $result[$key]['select'] = $node['active'];
-            $result[$key]['key'] = $node['id'];
-            unset($result[$key]['active']);
-        }
-
-        $tree = $repo->buildTree($result, array('decorate' => false));
-
-        return $this->get('serializer')->serialize($tree, 'json');
-    }
-
-    /**
      * @throws AccessDeniedException
      *
      * @return Response
@@ -109,6 +77,7 @@ class MenuAdminController extends Controller
         $repo = $em->getRepository($this->admin->getClass());
 
         $request = $this->getRequest();
+        $root = $request->get('root');
         $prevId = $request->get('prev');
         $parentId = $request->get('parent');
 
@@ -117,7 +86,9 @@ class MenuAdminController extends Controller
         $newNode->setTitle('NewNode');
         $newNode->setActive(false);
 
-        if (is_numeric($prevId)) {
+        if ($root == 1) {
+            $em->persist($newNode);
+        } elseif (is_numeric($prevId)) {
             $prevNode = $repo->find($prevId);
             $repo->persistAsPrevSiblingOf($newNode, $prevNode);
         } elseif (is_numeric($parentId)) {
@@ -231,19 +202,66 @@ class MenuAdminController extends Controller
          * @var \Doctrine\ORM\EntityManager                        $em
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
          * @var MenuNode                                           $node
-         * @var MenuNode                                           $parentNode
          */
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository($this->admin->getClass());
         $node = $repo->find($id);
-        if ($node instanceof MenuNode) {
-            $parentNode = $node->getParent();
-            $repo->removeFromTree($node);
-            $em->clear();
 
-            return new Response(json_encode(array('key' => $parentNode->getId())));
+        $query = $em
+            ->createQueryBuilder()
+            ->select('node')
+            ->from($this->admin->getClass(), 'node')
+            ->orderBy('node.root, node.lft', 'ASC')
+            ->andWhere('node.root = :root')
+            ->andWhere('node.lft > :left')
+            ->andWhere('node.rgt < :right')
+            ->setParameter('root', $node->getRoot())
+            ->setParameter('left', $node->getLft())
+            ->setParameter('right', $node->getRgt())
+            ->getQuery();
+        foreach ($query->getResult() as $child) {
+            $em->remove($child);
+        }
+        $em->remove($node);
+
+        $repo->verify();
+        $repo->recover();
+        $em->flush();
+
+        return new Response(json_encode(true));
+    }
+
+    /**
+     * @return string (json)
+     */
+    protected function loadJsonTree()
+    {
+        /**
+         * @var \Doctrine\ORM\EntityManager                        $em
+         * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
+         */
+        $em = $this->getDoctrine()->getEntityManager();
+        $repo = $em->getRepository($this->admin->getClass());
+
+        $query = $em
+            ->createQueryBuilder()
+            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root')
+            ->from($this->admin->getClass(), 'node')
+            ->orderBy('node.root, node.lft', 'ASC')
+            ->getQuery();
+        $repo->setChildrenIndex('children');
+        $result = $query->getArrayResult();
+
+        foreach ($result as $key => $node) {
+            $result[$key]['select'] = $node['active'];
+            $result[$key]['key'] = $node['id'];
+            unset($result[$key]['active']);
+
+            $result[$key]['isFolder'] = ($node['lvl'] == 0);
         }
 
-        return new Response(json_encode(false));
+        $tree = $repo->buildTree($result, array('decorate' => false));
+
+        return $this->get('serializer')->serialize($tree, 'json');
     }
 }
