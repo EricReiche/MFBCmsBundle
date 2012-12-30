@@ -17,6 +17,7 @@ function deleteTreeChild()
         error: function(msg){
             tree = node.tree;
             tree.reload();
+            alert('Sorry, something went wrong.');
         }
     });
 }
@@ -58,9 +59,28 @@ function addTreeChild()
         error: function(msg){
             tree = node.tree;
             tree.reload();
+            alert('Sorry, something went wrong.');
         }
     });
+}
 
+function selectNode(flag, dtnode)
+{
+    var nodeId = dtnode.data.id;
+    $.ajax({
+        type: "POST",
+        url: treeSaveUrl,
+        dataType: 'json',
+        data: 'id=' + nodeId + '&active=' + ((flag) ? 1 : 0),
+        success: function(msg){
+            loading(false);
+        },
+        error: function(msg){
+            tree = node.tree;
+            tree.reload();
+            alert('Sorry, something went wrong.');
+        }
+    });
 }
 
 function loading(start)

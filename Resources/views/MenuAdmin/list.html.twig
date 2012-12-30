@@ -13,14 +13,23 @@
 {% endblock%}
 
 {% block list_table %}
-    <div id="controls">
+    <div id="controls" style="display: none;">
         <a href="#" onclick="addTreeChild()"><img src="/img/onebit/01/PNG/onebit_31.png" class="onebit" /></a>
         <a href="#" onclick="deleteTreeChild()"><img src="/img/onebit/01/PNG/onebit_33.png" class="onebit" /></a>
     </div>
-    <div id="spinner" style="display: none;">
+    <div id="spinner">
         <img src="/img/ajax-loader.gif"/>
     </div>
-    <div id="tree"></div>
+
+    <div>
+        <div class="span5">
+            <div id="tree"></div>
+        </div>
+        <div class="span7">
+            <div id="edit">test</div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         var treeAddUrl = "{{ admin.generateUrl('ajax_add') }}";
         var treeDeleteUrl = "{{ admin.generateUrl('ajax_delete') }}";
@@ -31,22 +40,21 @@
             persist: true,
             checkbox: true,
             minExpandLevel: 3,
+            selectMode: 2,
             onPostInit: function(isReloading, isError) {
-                // 'this' is the current tree
-                // isReloading is true, if status was read from existing cookies
-                // isError is only used in Ajax mode
-                // Fire an onActivate() event for the currently active node
                 this.reactivate();
                 loading(false)
             },
             onActivate: function(node) {
-                // Use status functions to find out about the calling context
                 var isInitializing = node.tree.isInitializing(); // Tree loading phase
                 var isReloading = node.tree.isReloading(); // Loading phase, and reading status from cookies
                 var isUserEvent = node.tree.isUserEvent(); // Event was triggered by mouse or keyboard
             },
             postProcess: function(data, dataType) {
                 loading(true)
+            },
+            onSelect: function(flag, dtnode) {
+                selectNode(flag, dtnode)
             },
             initAjax: {url: treeListUrl}
         });

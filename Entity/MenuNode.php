@@ -50,6 +50,11 @@ class MenuNode
     private $linkPath;
 
     /**
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
+
+    /**
      * @ORM\Column(name="link_arguments", type="array", nullable=true)
      */
     private $linkArguments;
@@ -114,6 +119,16 @@ class MenuNode
     public function getParent()
     {
         return $this->parent;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    public function getActive()
+    {
+        return $this->active;
     }
 
     public function getLinkPlain()

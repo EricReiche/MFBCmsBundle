@@ -64,12 +64,20 @@ class MenuAdminController extends Controller
 
         $query = $em
             ->createQueryBuilder()
-            ->select('node.title, node.id, node.id as key, node.lvl, node.lft, node.rgt, node.root')
+            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root')
             ->from($this->admin->getClass(), 'node')
             ->orderBy('node.root, node.lft', 'ASC')
             ->getQuery();
         $repo->setChildrenIndex('children');
-        $tree = $repo->buildTree($query->getArrayResult(), array('decorate' => false));
+        $result = $query->getArrayResult();
+
+        foreach ($result as $key => $node) {
+            $result[$key]['select'] = $node['active'];
+            $result[$key]['key'] = $node['id'];
+            unset($result[$key]['active']);
+        }
+
+        $tree = $repo->buildTree($result, array('decorate' => false));
 
         $data = $this->get('serializer')->serialize($tree, 'json');
 
@@ -126,14 +134,30 @@ class MenuAdminController extends Controller
             throw new AccessDeniedException();
         }
 
+        $request = $this->getRequest();
         /**
          * @var \Doctrine\ORM\EntityManager                        $em
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
+         * @var int                                                $id
+         * @var MenuNode                                           $node
          */
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository($this->admin->getClass());
+        $id = $request->get('id');
+        if (!is_numeric($id)) {
+            return new Response(json_encode(false));
+        }
+        $node = $repo->find($id);
 
-        return new Response(json_encode(false));
+        $active = $request->get('active');
+        if (!is_null($active)) {
+            $node->setActive((bool)$active);
+        }
+
+        $em->persist($node);
+        $em->flush();
+
+        return new Response(json_encode(true));
     }
 
     /**
@@ -152,6 +176,7 @@ class MenuAdminController extends Controller
         /**
          * @var \Doctrine\ORM\EntityManager                        $em
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
+         * @var MenuNode                                           $node
          */
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository($this->admin->getClass());
