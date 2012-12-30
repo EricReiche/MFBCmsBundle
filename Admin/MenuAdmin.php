@@ -41,6 +41,7 @@ class MenuAdmin extends Admin
         $collection->add('ajax_tree');
         $collection->add('ajax_add');
         $collection->add('ajax_save');
+        $collection->add('ajax_form');
         $collection->add('ajax_delete');
         $collection->remove('create');
         $collection->remove('edit');

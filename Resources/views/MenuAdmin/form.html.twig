@@ -1,0 +1,5 @@
+<form id="editForm" action="{{ admin.generateUrl('ajax_form', {'id': admin.id(object)}) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>

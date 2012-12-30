@@ -13,9 +13,11 @@
         var treeDeleteUrl = "{{ admin.generateUrl('ajax_delete') }}";
         var treeSaveUrl = "{{ admin.generateUrl('ajax_save') }}";
         var treeListUrl = "{{ admin.generateUrl('ajax_tree') }}";
+        var treeFormUrl = "{{ admin.generateUrl('ajax_form') }}";
     </script>
 
     <script src="{{ asset('/js/jquery.cookie.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/jquery.form.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/mfbcms/js/jquery.dynatree.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/mfbcms/js/menu.js') }}" type="text/javascript"></script>
 {% endblock%}
@@ -34,7 +36,7 @@
             <div id="tree"></div>
         </div>
         <div class="span7">
-            <div id="edit">test</div>
+            <div id="edit"></div>
         </div>
     </div>
 {% endblock %}

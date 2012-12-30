@@ -172,6 +172,53 @@ class MenuAdminController extends Controller
      *
      * @return Response
      */
+    public function ajaxFormAction()
+    {
+        if (false === $this->admin->isGranted('EDIT')) {
+            throw new AccessDeniedException();
+        }
+
+        $request = $this->getRequest();
+        /**
+         * @var \Doctrine\ORM\EntityManager                        $em
+         * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
+         * @var int                                                $id
+         * @var MenuNode                                           $node
+         */
+        $em = $this->getDoctrine()->getEntityManager();
+        $repo = $em->getRepository($this->admin->getClass());
+        $id = $request->get('id');
+        if (!is_numeric($id)) {
+            return new Response('');
+        }
+        $node = $repo->find($id);
+
+        $form = $this->createFormBuilder($node)
+            ->add('title', 'text')
+            ->add('linkPlain', 'text')
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em->persist($node);
+                $em->flush();
+            }
+        }
+
+        return $this->render(
+            'MFBCmsBundle:MenuAdmin:form.html.twig', array(
+            'action' => 'form',
+            'form' => $form->createView(),
+            'object' => $node
+        ));
+    }
+
+    /**
+     * @throws AccessDeniedException
+     *
+     * @return Response
+     */
     public function ajaxDeleteAction()
     {
         if (false === $this->admin->isGranted('DELETE')) {

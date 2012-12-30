@@ -94,7 +94,20 @@ function loading(start)
     }
 }
 
+function loadEditForm(node)
+{
+    var nodeId = node.data.id;
+    $('#edit').load(treeFormUrl, 'id=' + nodeId, function() {
+        $('#editForm').ajaxForm({
+            success: function(responseText, statusText, xhr, $form) {
+                node.tree.reload();
+                $('#edit').text('');
+            },
+            target: '#edit'
+        });
+    });
 
+}
 
 $(document).ready(function() {
     $("#tree").dynatree({
@@ -112,6 +125,13 @@ $(document).ready(function() {
         onSelect: function(flag, dtnode) {
             selectNode(flag, dtnode)
         },
-        initAjax: {url: treeListUrl}
+        initAjax: {url: treeListUrl},
+
+        onActivate: function(node) {
+            loadEditForm(node);
+        },
+        onDeactivate: function(node) {
+            $('#edit').text('');
+        }
     });
 });
