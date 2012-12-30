@@ -70,7 +70,9 @@ class CmsMenuService
         if (!($node instanceof MenuNode)) {
             return '<!-- Root node with id "' . $name . '" not found -->';
         }
-        $data = array('menu' => array('children' => $this->loadAllChildren($node)));
+        $menu = $this->loadTree($node);
+        $menu = array_shift($menu);
+        $data = array('menu' => $menu);
 
         $rendered = $this->container->get('templating')->render('MFBCmsBundle:Menu:menu.html.twig', $data);
 
@@ -101,19 +103,26 @@ class CmsMenuService
     }
 
     /**
+     * @param MenuNode $node
+     *
      * @return array
      */
-    public function loadTree()
+    public function loadTree($node = null)
     {
         /** @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo */
         $repo = $this->em->getRepository(self::ENTITY);
 
-        $query = $this->em
+        $qb = $this->em
             ->createQueryBuilder()
-            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root')
+            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root, node.linkPlain')
             ->from(self::ENTITY, 'node')
-            ->orderBy('node.root, node.lft', 'ASC')
-            ->getQuery();
+            ->orderBy('node.root, node.lft', 'ASC');
+
+        if ($node instanceof MenuNode) {
+            $qb->andWhere('node.root = :root')
+                ->setParameter('root', $node->getRoot());
+        }
+        $query = $qb->getQuery();
         $repo->setChildrenIndex('children');
         $result = $query->getArrayResult();
 
