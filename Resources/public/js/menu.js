@@ -93,3 +93,25 @@ function loading(start)
         $('#controls').show();
     }
 }
+
+
+
+$(document).ready(function() {
+    $("#tree").dynatree({
+        persist: false,
+        checkbox: true,
+        minExpandLevel: 3,
+        selectMode: 2,
+        debugLevel: 0,
+        onPostInit: function(isReloading, isError) {
+            loading(false)
+        },
+        postProcess: function(data, dataType) {
+            loading(true)
+        },
+        onSelect: function(flag, dtnode) {
+            selectNode(flag, dtnode)
+        },
+        initAjax: {url: treeListUrl}
+    });
+});
