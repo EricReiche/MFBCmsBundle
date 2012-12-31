@@ -135,7 +135,7 @@ class CmsMenuService
             $result[$key]['key'] = $node['id'];
             unset($result[$key]['active']);
 
-            $result[$key]['isFolder'] = ($node['lvl'] == 0);
+            $result[$key]['isFolder'] = ($node['rgt'] - $node['lft'] > 1);
         }
 
         return $repo->buildTree($result, array('decorate' => false));

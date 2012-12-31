@@ -129,11 +129,30 @@ class MenuAdminController extends Controller
         $node = $repo->find($id);
 
         $active = $request->get('active');
+        $targetId = $request->get('target');
+        $mode = $request->get('mode');
+
         if (!is_null($active)) {
             $node->setActive((bool)$active);
+            $em->persist($node);
+        }
+        if (!is_null($targetId) && !is_null($mode)) {
+            $target = $repo->find($targetId);
+            switch ($mode) {
+                case 'over':
+                    $repo->persistAsFirstChildOf($node, $target);
+                    break;
+                case 'before':
+                    $repo->persistAsPrevSiblingOf($node, $target);
+                    break;
+                case 'after':
+                    $repo->persistAsNextSiblingOf($node, $target);
+                    break;
+                default:
+                    return false;
+            }
         }
 
-        $em->persist($node);
         $em->flush();
 
         return new Response(json_encode(true));
