@@ -11,8 +11,14 @@ This bundle offers some CMS functionality
 # Dependencies
 
 Depends on doctrine extensions (nested sets tree for menu), TwigStringBundle (blocks) & Presta Sitemap Bundle.
+The menu frontend templates are designed to work with the Twitter Bootstrap.
+Uses the silk icon set from http://www.famfamfam.com/lab/icons/silk/.
+Uses the dynatree library from http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html
+Depends on twitter bootstrap JS, jQuery, jQuery UI, jQuery cookie & jQuery form loaded (put it in web/js/).
 
 # Installation
+
+Download the silk icon set from http://www.famfamfam.com/lab/icons/silk/ and put it to your webroot under /img/silk/
 
  Add the following to your config.yml
 
