@@ -33,6 +33,8 @@
 
         <parameter key="mfb_cms.service.cms_menu.class">MFB\CmsBundle\Service\CmsMenuService</parameter>
         <parameter key="mfb_cms.twig.cms_menu.extension.class">MFB\CmsBundle\Twig\Extension\CmsMenuExtension</parameter>
+
+        <parameter key="mfb_cms.service.locale.class">MFB\CmsBundle\Service\LocaleService</parameter>
     </parameters>
 
     <services>
@@ -89,6 +91,9 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="service_container"/>
             <argument type="service" id="serializer"/>
+        </service>
+
+        <service id="mfb_cms.service.locale" class="%mfb_cms.service.locale.class%">
         </service>
     </services>
 </container>
