@@ -37,6 +37,7 @@ class PageAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title')
+            ->add('slug')
             ->add('releasedAt')
             ->add('active')
             ->add('_action', 'actions', array(
