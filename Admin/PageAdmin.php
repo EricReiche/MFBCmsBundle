@@ -60,5 +60,15 @@ class PageAdmin extends Admin
             ->add('active', null, array('required' => false))
             ->add('content', null, array('required' => true))
             ->end();
+        $formMapper->setHelps(array(
+            'content' =>
+            $this->trans('Formatting with markdown & html. See ')
+                . '<a target="_blank" href="http://'
+                . $this->trans('daringfireball.net/projects/markdown/basics')
+                . '">'
+                . $this->trans('help')
+                . '</a>'
+            )
+        );
     }
 }
