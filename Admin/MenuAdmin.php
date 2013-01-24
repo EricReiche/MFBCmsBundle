@@ -58,6 +58,7 @@ class MenuAdmin extends Admin
             ->add('title', null, array('required' => true))
             ->add('linkType', null, array('required' => false))
             ->add('linkPlain', null, array('required' => false))
+            ->add('linkArguments', null, array('required' => false))
             ->end();
     }
 }

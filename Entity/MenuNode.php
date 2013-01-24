@@ -55,7 +55,7 @@ class MenuNode
     private $active;
 
     /**
-     * @ORM\Column(name="link_arguments", type="array", nullable=true)
+     * @ORM\Column(name="link_arguments", type="text", nullable=true)
      */
     private $linkArguments;
 
@@ -178,11 +178,18 @@ class MenuNode
 
     public function getLinkArguments()
     {
+        $try = @unserialize($this->linkArguments);
+        if (is_array($try)) {
+            return $try;
+        }
         return $this->linkArguments;
     }
 
     public function setLinkArguments($linkArguments)
     {
+        if (is_array($linkArguments)) {
+            $linkArguments = serialize($linkArguments);
+        }
         return $this->linkArguments = $linkArguments;
     }
 }

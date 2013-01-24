@@ -76,28 +76,6 @@ class BlockAdmin extends Admin
     }
 
     /**
-     * Clear cache after saving
-     *
-     * @return void
-     */
-    public function postUpdate($object)
-    {
-        $this->getBlockService()->clearCache($object->getSlug());
-    }
-
-    /**
-     * Clear cache after saving
-     *
-     * @param Block $object
-     *
-     * @return void
-     */
-    public function postRemove($object)
-    {
-        $this->getBlockService()->clearCache($object->getSlug());
-    }
-
-    /**
      * @return CmsBlockService
      */
     protected function getBlockService()

@@ -186,7 +186,8 @@ class MenuAdminController extends Controller
 
         $form = $this->createFormBuilder($node)
             ->add('title', 'text')
-            ->add('linkPlain', 'text')
+            ->add('linkPlain', 'text', array('required' => false))
+            ->add('linkArguments', 'textarea', array('required' => false))
             ->add('linkType', 'choice', array('choices' => MenuNodeLinkTypeType::getChoices()))
             ->getForm();
 

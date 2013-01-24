@@ -7,6 +7,7 @@ use MFB\CmsBundle\Entity\MenuNode;
 
 use Doctrine\ORM\EntityManager;
 
+use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 use MFB\CmsBundle\Entity\Types\BlockStatusType;
@@ -115,7 +116,7 @@ class CmsMenuService
 
         $qb = $this->em
             ->createQueryBuilder()
-            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root, node.linkPlain, node.linkType')
+            ->select('node.title, node.id, node.active, node.lvl, node.lft, node.rgt, node.root, node.linkPlain, node.linkArguments, node.linkType')
             ->from(self::ENTITY, 'node')
             ->orderBy('node.root, node.lft', 'ASC');
 
@@ -136,6 +137,16 @@ class CmsMenuService
             unset($result[$key]['active']);
 
             $result[$key]['isFolder'] = ($node['rgt'] - $node['lft'] > 1);
+
+            if ($node['linkType'] == MenuNodeLinkTypeType::TEXT) {
+                $result[$key]['link'] = $node['linkPlain'];
+            } elseif ($node['linkType'] == MenuNodeLinkTypeType::PATH) {
+                $result[$key]['link'] = $node['linkPlain'];
+            } elseif ($node['linkType'] == MenuNodeLinkTypeType::SEPARATOR) {
+                $result[$key]['link'] = '';
+            } elseif ($node['linkType'] == MenuNodeLinkTypeType::NOLINK) {
+                $result[$key]['link'] = $node['linkArguments'];
+            }
         }
 
         return $repo->buildTree($result, array('decorate' => false));

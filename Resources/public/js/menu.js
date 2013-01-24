@@ -127,6 +127,33 @@ function loading(start)
     }
 }
 
+function updateLinkFieldEvent()
+{
+    updateLinkField($(this));
+}
+function updateLinkField(typeField)
+{
+    var type = typeField.val();
+    var arguments = $('#form_linkArguments').parent();
+    var plain = $('#form_linkPlain').parent();
+    if (type == 'text') {
+        arguments.hide();
+        plain.show();
+    } else if (type == 'path') {
+        arguments.hide();
+        plain.hide();
+    } else if (type == 'separator') {
+        arguments.hide();
+        plain.hide();
+    } else if (type == 'nolink') {
+        arguments.show();
+        plain.hide();
+    } else {
+        arguments.hide();
+        plain.hide();
+    }
+}
+
 function loadEditForm(node)
 {
     loading(true);
@@ -142,6 +169,10 @@ function loadEditForm(node)
             },
             target: '#edit'
         });
+        var linkTypeField = $('#form_linkType');
+        updateLinkField(linkTypeField);
+        linkTypeField.change(updateLinkFieldEvent);
+
     });
 
 }
