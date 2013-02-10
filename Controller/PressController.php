@@ -27,7 +27,7 @@ class PressController extends Controller
      */
     public function listAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         /** @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
@@ -46,7 +46,7 @@ class PressController extends Controller
      */
     public function currentAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         /** @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(

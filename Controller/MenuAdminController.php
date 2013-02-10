@@ -74,7 +74,7 @@ class MenuAdminController extends Controller
          * @var \Doctrine\ORM\EntityManager                        $em
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
          */
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($this->admin->getClass());
 
         $request = $this->getRequest();
@@ -120,7 +120,7 @@ class MenuAdminController extends Controller
          * @var int                                                $id
          * @var MenuNode                                           $node
          */
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($this->admin->getClass());
         $id = $request->get('id');
         if (!is_numeric($id)) {
@@ -176,7 +176,7 @@ class MenuAdminController extends Controller
          * @var int                                                $id
          * @var MenuNode                                           $node
          */
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($this->admin->getClass());
         $id = $request->get('id');
         if (!is_numeric($id)) {
@@ -225,7 +225,7 @@ class MenuAdminController extends Controller
          * @var \Gedmo\Tree\Entity\Repository\NestedTreeRepository $repo
          * @var MenuNode                                           $node
          */
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($this->admin->getClass());
         $node = $repo->find($id);
 

@@ -28,7 +28,7 @@ class NewsController extends Controller
      */
     public function listAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         /** @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
@@ -47,7 +47,7 @@ class NewsController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $repo = $em->getRepository('MFBCmsBundle:News');
         $news = $repo->find($id);

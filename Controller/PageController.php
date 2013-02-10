@@ -27,7 +27,7 @@ class PageController extends Controller
      */
     public function showAction($slug)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $repo = $em->getRepository('MFBCmsBundle:Page');
         $content = $repo->findOneBy(array('slug' => $slug));
