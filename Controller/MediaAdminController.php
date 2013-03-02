@@ -45,5 +45,47 @@ class MediaAdminController extends Controller
             'action' => 'list'
         ));
     }
+    /**
+     * return the Response object associated to the list action
+     *
+     * @throws AccessDeniedException
+     *
+     * @return Response
+     */
+    public function createAction()
+    {
+        if (false === $this->admin->isGranted('CREATE')) {
+            throw new AccessDeniedException();
+        }
+
+        return $this->render(
+            'MFBCmsBundle:MediaAdmin:create.html.twig', array(
+            'action' => 'create'
+        ));
+    }
+
+    /**
+     * @throws AccessDeniedException
+     *
+     * @return Response
+     */
+    public function ajaxUploadAction()
+    {
+        if (false === $this->admin->isGranted('EDIT')) {
+            throw new AccessDeniedException();
+        }
+
+        /**
+         * @var \Doctrine\ORM\EntityManager $em
+         */
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository($this->admin->getClass());
+
+        $em->flush();
+
+        return new Response(json_encode(true));
+    }
+
 
 }

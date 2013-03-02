@@ -3,7 +3,8 @@ namespace MFB\CmsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Form\FormMapper,
-    Sonata\AdminBundle\Datagrid\ListMapper;
+    Sonata\AdminBundle\Datagrid\ListMapper,
+    Sonata\AdminBundle\Route\RouteCollection;
 
 use MFB\CmsBundle\Entity\Gallery;
 use MFB\CmsBundle\Entity\Media;
@@ -58,5 +59,15 @@ class MediaAdmin extends Admin
     protected function get($id)
     {
         return $this->configurationPool->getContainer()->get($id);
+    }
+    /**
+     * Configure the Admin routes
+     *
+     * @param \Sonata\AdminBundle\Route\RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('ajax_upload');
+        $collection->remove('edit');
     }
 }

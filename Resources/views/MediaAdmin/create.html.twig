@@ -8,8 +8,9 @@
     {{ parent() }}
 
     <script src="{{ asset('bundles/mfbcms/js/media.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mfbcms/js/dropzone.js') }}" type="text/javascript"></script>
 {% endblock%}
 
 {% block list_table %}
-    Here be dragons
+    <form action="{{ admin.generateUrl('ajax_upload') }}" class="dropzone" id="media-dropzone"></form>
 {% endblock %}
