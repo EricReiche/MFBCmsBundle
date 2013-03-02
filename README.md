@@ -15,6 +15,7 @@ The menu frontend templates are designed to work with the Twitter Bootstrap.
 Uses the silk icon set from http://www.famfamfam.com/lab/icons/silk/.
 Uses the dynatree library from http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html
 Depends on twitter bootstrap JS, jQuery, jQuery UI, jQuery cookie & jQuery form loaded (put it in web/js/).
+Uses [dropzone.js](http://www.dropzonejs.com/).
 
 # Installation
 
