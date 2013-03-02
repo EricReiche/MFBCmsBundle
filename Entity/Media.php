@@ -36,21 +36,21 @@ class Media
     /**
      * @var string $title
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     protected $title;
 
     /**
      * @var string $slug
      *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
      */
     protected $slug;
 
     /**
      * @var string $description
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 
@@ -73,7 +73,7 @@ class Media
      *
      * @var int $parentID
      */
-    protected $parentID;
+    protected $parentId;
 
     /**
      * @ORM\Column(name="status", type="string", length=10, nullable=false)
@@ -200,5 +200,45 @@ class Media
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set parentId
+     *
+     * @param int $parentId
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+    }
+
+    /**
+     * Get parentId
+     *
+     * @return int
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * Set parentType
+     *
+     * @param string $parentType
+     */
+    public function setParentType($parentType)
+    {
+        $this->parentType = $parentType;
+    }
+
+    /**
+     * Get parentType
+     *
+     * @return string
+     */
+    public function getParentType()
+    {
+        return $this->parentType;
     }
 }

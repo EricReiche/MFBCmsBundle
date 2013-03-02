@@ -35,6 +35,10 @@ class GalleryService
      */
     protected $em;
 
+    public static $imageTypes = array('jpg', 'jpeg', 'png', 'gif');
+
+    public static $videoTypes = array('mkv', 'avi', 'mp4', 'flv', 'mov');
+
     const UPLOAD_DIR = 'uploads';
 
     const WEB_DIR = '/../../../../../../web/';
@@ -86,8 +90,32 @@ class GalleryService
             $fileName = $this->cleanFileName($uploadedFile->getClientOriginalName());
 
             $result = $uploadedFile->move($this->getUploadPath(), $fileName);
+            $shortname = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+
+            $media = new Media();
+            $media->setSlug($fileName);
+            $media->setTitle($shortname);
+            $media->setStatus(StatusType::ENABLED);
+
+            //@todo
+//            $media->setParentId();
+//            $media->setParentType();
+
+            if (in_array($extension, static::$imageTypes)) {
+                $media->setType(MediaTypeType::PICTURE);
+            } elseif (in_array($extension, static::$videoTypes)) {
+                $media->setType(MediaTypeType::VIDEO);
+            } else {
+                // @todo translate
+                return array('error' => 'Invalid file type.');
+            }
+            $this->em->persist($media);
+            $this->em->flush();
+
             return array('file' => $uploadedFile);
         } catch (\Exception $e) {
+            // @todo error handling
             return array('error' => $e->getMessage());
         }
     }
