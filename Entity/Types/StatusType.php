@@ -13,28 +13,23 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  *
- * Enum nodelink type
+ * Enum status type
  */
-class MenuNodeLinkTypeType extends AbstractType
+class StatusType extends AbstractType
 {
     /**
      * @var string
      */
-    protected $type = 'MenuNodeLinkTypeType';
+    protected $type = 'StatusType';
 
-    const TEXT = 'text';
-    const PATH = 'path';
-    const SEPARATOR = 'separator';
-    const NOLINK = 'nolink';
+    const ENABLED  = 'Enabled';
+    const DISABLED = 'Disabled';
 
     /**
      * @var array
      */
     public static $choices = array(
-        self::TEXT => 'Text',
-        self::PATH => 'Path',
-        self::SEPARATOR => 'Separator',
-        self::NOLINK => 'Unlinked',
+        self::ENABLED  => 'Enabled',
+        self::DISABLED => 'Disabled',
     );
-
 }

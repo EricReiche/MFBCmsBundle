@@ -4,8 +4,8 @@ namespace MFB\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use MFB\CmsBundle\Entity\Types\BlockTypeType,
-    MFB\CmsBundle\Entity\Types\StatusType;
+use MFB\CmsBundle\Entity\Types\GalleryTypeType;
+use MFB\CmsBundle\Entity\Types\StatusType;
 
 /**
  * @category   MFB
@@ -16,12 +16,12 @@ use MFB\CmsBundle\Entity\Types\BlockTypeType,
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  *
- * MFB\CmsBundle\Entity\Block
+ * MFB\CmsBundle\Entity\Gallery
  *
- * @ORM\Table(name="blocks")
- * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\BlockRepository")
+ * @ORM\Table(name="galleries")
+ * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\GalleryRepository")
  */
-class Block
+class Gallery
 {
     /**
      * @var integer $id
@@ -47,21 +47,21 @@ class Block
     protected $slug;
 
     /**
-     * @var string $content
+     * @var string $description
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="description", type="text")
      */
-    protected $content;
+    protected $description;
 
     /**
-     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @ORM\Column(name="type", type="string", length=10, nullable=false)
      *
      * @var string $type
      */
-    protected $type = BlockTypeType::TEXT;
+    protected $type = GalleryTypeType::GRID;
 
     /**
-     * @ORM\Column(name="status", type="string", length=255, nullable=false)
+     * @ORM\Column(name="status", type="string", length=10, nullable=false)
      *
      * @var string $status
      */
@@ -128,13 +128,13 @@ class Block
     }
 
     /**
-     * Set content
+     * Set description
      *
-     * @param string $content
+     * @param string $description
      */
-    public function setContent($content)
+    public function setDescription($description)
     {
-        $this->content = $content;
+        $this->description = $description;
     }
 
     /**
@@ -142,9 +142,9 @@ class Block
      *
      * @return string
      */
-    public function getContent()
+    public function getDescription()
     {
-        return $this->content;
+        return $this->description;
     }
 
     /**

@@ -13,24 +13,14 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  *
- * Enum block status
+ * Abstract Enum methods
  */
-class BlockStatusType
+abstract class AbstractType
 {
-    /**
-     * @var string
-     */
-    protected $type = 'BlockStatusType';
-
-    const ENABLED  = 'Enabled';
-    const DISABLED = 'Disabled';
-
     /**
      * @var array
      */
     public static $choices = array(
-        self::ENABLED  => 'Enabled',
-        self::DISABLED => 'Disabled',
     );
 
     /**
