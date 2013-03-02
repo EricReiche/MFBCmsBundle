@@ -4,8 +4,13 @@ namespace MFB\CmsBundle\Controller;
 
 use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+
 use MFB\CmsBundle\Entity\Gallery;
 use MFB\CmsBundle\Entity\Media;
+use MFB\CmsBundle\Service\GalleryService;
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -26,7 +31,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
  */
 class MediaAdminController extends Controller
 {
-
     /**
      * return the Response object associated to the list action
      *
@@ -61,16 +65,8 @@ class MediaAdminController extends Controller
         return $this->render(
             'MFBCmsBundle:MediaAdmin:create.html.twig', array(
             'action' => 'create',
-            'maxSize' => $this->getUploadLimit()
+            'maxSize' => UploadedFile::getMaxFilesize() / 1024 / 1024
         ));
-    }
-
-    public function getUploadLimit()
-    {
-        $maxUpload = (int)(ini_get('upload_max_filesize'));
-        $maxPost = (int)(ini_get('post_max_size'));
-        $memoryLimit = (int)(ini_get('memory_limit'));
-        return min($maxUpload, $maxPost, $memoryLimit);
     }
 
     /**
@@ -88,13 +84,21 @@ class MediaAdminController extends Controller
          * @var \Doctrine\ORM\EntityManager $em
          */
         $request = $this->getRequest();
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository($this->admin->getClass());
 
-        $em->flush();
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('file');
+        if (null === $uploadedFile) {
+            return new Response(json_encode(false));
+        }
+        /** @var GalleryService $galleryService */
+        $galleryService = $this->get('mfb_cms.service.gallery');
+
+        $uploadResponse = $galleryService->handleUpload($uploadedFile);
+
+        if (isset($uploadResponse['error'])) {
+            return new Response($uploadResponse['error'], 500);
+        }
 
         return new Response(json_encode(true));
     }
-
-
 }
