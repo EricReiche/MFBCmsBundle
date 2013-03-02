@@ -24,57 +24,21 @@ use MFB\CmsBundle\Service\GalleryService;
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  */
-class GalleryAdmin extends Admin
+class MediaAdmin extends Admin
 {
     /**
      * The label class name  (used in the title/breadcrumb ...)
      *
      * @var string
      */
-    protected $classnameLabel = 'gallery';
+    protected $classnameLabel = 'media';
 
     /**
      * The base route pattern used to generate the routing information
      *
      * @var string
      */
-    protected $baseRoutePattern = '/galleries';
-
-    /**
-     * @param ListMapper $listMapper
-     */
-    protected function configureListFields(ListMapper $listMapper)
-    {
-        $listMapper
-            ->addIdentifier('title')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'edit' => array(),
-                )
-            ));
-    }
-
-    /**
-     * @param FormMapper $formMapper
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->with('General')
-            ->add('title', null, array('required' => true))
-            ->add('description', null, array('required' => true))
-            ->add('type', 'choice', array(
-                'label' => 'Type',
-                'choices' => GalleryTypeType::getChoices(),
-                'required'  => true,
-            ))
-            ->add('status', 'choice', array(
-                'label' => 'Status',
-                'choices' => StatusType::getChoices(),
-                'required'  => true,
-            ))
-            ->end();
-    }
+    protected $baseRoutePattern = '/media';
 
     /**
      * @return GalleryService

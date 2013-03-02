@@ -31,6 +31,10 @@
         <parameter key="mfb_cms.admin.gallery.class">MFB\CmsBundle\Admin\GalleryAdmin</parameter>
         <parameter key="mfb_cms.admin.gallery.entity">MFB\CmsBundle\Entity\Gallery</parameter>
 
+        <parameter key="mfb_cms.admin.media.class">MFB\CmsBundle\Admin\MediaAdmin</parameter>
+        <parameter key="mfb_cms.admin.media.entity">MFB\CmsBundle\Entity\Media</parameter>
+        <parameter key="mfb_cms.admin.media.controller">MFBCmsBundle:MediaAdmin</parameter>
+
         <parameter key="mfb_cms.admin.menu.class">MFB\CmsBundle\Admin\MenuAdmin</parameter>
         <parameter key="mfb_cms.admin.menu.entity">MFB\CmsBundle\Entity\MenuNode</parameter>
         <parameter key="mfb_cms.admin.menu.controller">MFBCmsBundle:MenuAdmin</parameter>
@@ -61,13 +65,6 @@
             <argument/>
         </service>
 
-        <service id="mfb_cms.admin.gallery" class="%mfb_cms.admin.gallery.class%">
-            <tag name="sonata.admin" manager_type="orm" group="Media" label="Galleries"/>
-            <argument/>
-            <argument>%mfb_cms.admin.gallery.entity%</argument>
-            <argument/>
-        </service>
-
         <service id="mfb_cms.admin.news" class="%mfb_cms.admin.news.class%">
             <tag name="sonata.admin" manager_type="orm" group="CMS" label="News"/>
             <argument/>
@@ -87,6 +84,20 @@
             <argument/>
             <argument>%mfb_cms.admin.menu.entity%</argument>
             <argument>%mfb_cms.admin.menu.controller%</argument>
+        </service>
+
+        <service id="mfb_cms.admin.gallery" class="%mfb_cms.admin.gallery.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Media" label="Galleries"/>
+            <argument/>
+            <argument>%mfb_cms.admin.gallery.entity%</argument>
+            <argument/>
+        </service>
+
+        <service id="mfb_cms.admin.media" class="%mfb_cms.admin.media.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Media" label="Media"/>
+            <argument/>
+            <argument>%mfb_cms.admin.media.entity%</argument>
+            <argument>%mfb_cms.admin.media.controller%</argument>
         </service>
 
         <service id="twig.extension.cms_block" class="%mfb_cms.twig.cms_block.extension.class%" public="true">
