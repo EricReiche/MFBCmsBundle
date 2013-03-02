@@ -5,6 +5,16 @@ use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Form\FormMapper,
     Sonata\AdminBundle\Datagrid\ListMapper;
 
+use MFB\CmsBundle\Entity\Gallery;
+use MFB\CmsBundle\Entity\Media;
+
+use MFB\CmsBundle\Entity\Types\GalleryTypeType,
+    MFB\CmsBundle\Entity\Types\StatusType,
+    MFB\CmsBundle\Entity\Types\MediaParentType,
+    MFB\CmsBundle\Entity\Types\MediaTypeType;
+
+use MFB\CmsBundle\Service\GalleryService;
+
 /**
  * @category   MFB
  * @package    MFBCmsBundle
@@ -14,21 +24,21 @@ use Sonata\AdminBundle\Admin\Admin,
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  */
-class PageAdmin extends Admin
+class GalleryAdmin extends Admin
 {
     /**
      * The label class name  (used in the title/breadcrumb ...)
      *
      * @var string
      */
-    protected $classnameLabel = 'page';
+    protected $classnameLabel = 'gallery';
 
     /**
      * The base route pattern used to generate the routing information
      *
      * @var string
      */
-    protected $baseRoutePattern = '/pages';
+    protected $baseRoutePattern = '/galleries';
 
     /**
      * @param ListMapper $listMapper
@@ -37,8 +47,6 @@ class PageAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('releasedAt')
-            ->add('active')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -53,20 +61,38 @@ class PageAdmin extends Admin
     {
         $formMapper
             ->with('General')
-            ->add('releasedAt', null, array('required' => true))
             ->add('title', null, array('required' => true))
-            ->add('active', null, array('required' => false))
-            ->add('content', null, array('required' => true))
+            ->add('description', null, array('required' => true))
+            ->add('type', 'choice', array(
+                'label' => 'Type',
+                'choices' => GalleryTypeType::getChoices(),
+                'required'  => true,
+            ))
+            ->add('status', 'choice', array(
+                'label' => 'Status',
+                'choices' => StatusType::getChoices(),
+                'required'  => true,
+            ))
             ->end();
-        $formMapper->setHelps(array(
-            'content' =>
-            $this->trans('Formatting with markdown & html. See ')
-                . '<a target="_blank" href="http://'
-                . $this->trans('daringfireball.net/projects/markdown/basics')
-                . '">'
-                . $this->trans('help')
-                . '</a>'
-            )
-        );
+    }
+
+    /**
+     * @return GalleryService
+     */
+    protected function getBlockService()
+    {
+        return $this->get('mfb_cms.service.gallery');
+    }
+
+    /**
+     * Gets a service.
+     *
+     * @param string $id The service identifier
+     *
+     * @return object The associated service
+     */
+    protected function get($id)
+    {
+        return $this->configurationPool->getContainer()->get($id);
     }
 }

@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use MFB\CmsBundle\Entity\Types\GalleryTypeType;
 use MFB\CmsBundle\Entity\Types\StatusType;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * @category   MFB
  * @package    MFBCmsBundle
@@ -43,6 +45,7 @@ class Gallery
      * @var string $slug
      *
      * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
      */
     protected $slug;
 
@@ -65,7 +68,7 @@ class Gallery
      *
      * @var string $status
      */
-    protected $status = StatusType::DISABLED;
+    protected $status = StatusType::ENABLED;
 
     /**
      * Get id

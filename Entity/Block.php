@@ -65,7 +65,7 @@ class Block
      *
      * @var string $status
      */
-    protected $status = StatusType::DISABLED;
+    protected $status = StatusType::ENABLED;
 
     /**
      * Get id

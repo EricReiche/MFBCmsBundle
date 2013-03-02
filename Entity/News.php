@@ -53,6 +53,14 @@ class News
     protected $content;
 
     /**
+     * @var string $slug
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
+     */
+    protected $slug;
+
+    /**
      * @var \datetime $releasedAt
      *
      * @ORM\Column(name="released_at", type="datetime")
@@ -153,6 +161,26 @@ class News
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

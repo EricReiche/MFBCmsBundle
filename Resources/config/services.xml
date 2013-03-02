@@ -18,18 +18,27 @@
     <parameters>
         <parameter key="mfb_cms.admin.block.class">MFB\CmsBundle\Admin\BlockAdmin</parameter>
         <parameter key="mfb_cms.admin.block.entity">MFB\CmsBundle\Entity\Block</parameter>
+
         <parameter key="mfb_cms.admin.pressrelease.class">MFB\CmsBundle\Admin\PressReleaseAdmin</parameter>
         <parameter key="mfb_cms.admin.pressrelease.entity">MFB\CmsBundle\Entity\PressRelease</parameter>
+
         <parameter key="mfb_cms.admin.news.class">MFB\CmsBundle\Admin\NewsAdmin</parameter>
         <parameter key="mfb_cms.admin.news.entity">MFB\CmsBundle\Entity\News</parameter>
+
         <parameter key="mfb_cms.admin.page.class">MFB\CmsBundle\Admin\PageAdmin</parameter>
         <parameter key="mfb_cms.admin.page.entity">MFB\CmsBundle\Entity\Page</parameter>
+
+        <parameter key="mfb_cms.admin.gallery.class">MFB\CmsBundle\Admin\GalleryAdmin</parameter>
+        <parameter key="mfb_cms.admin.gallery.entity">MFB\CmsBundle\Entity\Gallery</parameter>
+
         <parameter key="mfb_cms.admin.menu.class">MFB\CmsBundle\Admin\MenuAdmin</parameter>
         <parameter key="mfb_cms.admin.menu.entity">MFB\CmsBundle\Entity\MenuNode</parameter>
         <parameter key="mfb_cms.admin.menu.controller">MFBCmsBundle:MenuAdmin</parameter>
 
         <parameter key="mfb_cms.service.cms_block.class">MFB\CmsBundle\Service\CmsBlockService</parameter>
         <parameter key="mfb_cms.twig.cms_block.extension.class">MFB\CmsBundle\Twig\Extension\CmsBlockExtension</parameter>
+
+        <parameter key="mfb_cms.service.gallery.class">MFB\CmsBundle\Service\GalleryService</parameter>
 
         <parameter key="mfb_cms.service.cms_menu.class">MFB\CmsBundle\Service\CmsMenuService</parameter>
         <parameter key="mfb_cms.twig.cms_menu.extension.class">MFB\CmsBundle\Twig\Extension\CmsMenuExtension</parameter>
@@ -44,10 +53,18 @@
             <argument>%mfb_cms.admin.block.entity%</argument>
             <argument/>
         </service>
+
         <service id="mfb_cms.admin.pressrelease" class="%mfb_cms.admin.pressrelease.class%">
             <tag name="sonata.admin" manager_type="orm" group="CMS" label="Press Releases"/>
             <argument/>
             <argument>%mfb_cms.admin.pressrelease.entity%</argument>
+            <argument/>
+        </service>
+
+        <service id="mfb_cms.admin.gallery" class="%mfb_cms.admin.gallery.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Media" label="Galleries"/>
+            <argument/>
+            <argument>%mfb_cms.admin.gallery.entity%</argument>
             <argument/>
         </service>
 
@@ -85,6 +102,10 @@
         <service id="mfb_cms.service.cms_block" class="%mfb_cms.service.cms_block.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="twigstring"/>
+        </service>
+
+        <service id="mfb_cms.service.gallery" class="%mfb_cms.service.gallery.class%">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
         <service id="mfb_cms.service.cms_menu" class="%mfb_cms.service.cms_menu.class%">

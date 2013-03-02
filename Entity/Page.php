@@ -49,6 +49,7 @@ class Page
      * @var string $slug
      *
      * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
      */
     protected $slug;
 

@@ -30,7 +30,7 @@ abstract class AbstractType
      */
     public static function getChoices()
     {
-        return self::$choices;
+        return static::$choices;
     }
 
     /**
@@ -41,7 +41,7 @@ abstract class AbstractType
      */
     public static function getValues()
     {
-        return array_keys(self::$choices);
+        return array_keys(static::$choices);
     }
 
     /**
@@ -54,8 +54,8 @@ abstract class AbstractType
      */
     public static function getReadableValue($key)
     {
-        return isset(self::$choices[$key])
-            ? self::$choices[$key]
+        return isset(static::$choices[$key])
+            ? static::$choices[$key]
             : false;
     }
 }
