@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
-use MFB\CmsBundle\Entity\Types\BlockStatusType;
+use MFB\CmsBundle\Entity\Types\StatusType;
 
 /**
  * @category   MFB

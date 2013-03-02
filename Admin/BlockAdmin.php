@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Admin\Admin,
 use MFB\CmsBundle\Entity\Block;
 
 use MFB\CmsBundle\Entity\Types\BlockTypeType,
-    MFB\CmsBundle\Entity\Types\BlockStatusType;
+    MFB\CmsBundle\Entity\Types\StatusType;
 
 use MFB\CmsBundle\Service\CmsBlockService;
 
@@ -69,7 +69,7 @@ class BlockAdmin extends Admin
                 ))
                 ->add('status', 'choice', array(
                     'label' => 'Status',
-                    'choices' => BlockStatusType::getChoices(),
+                    'choices' => StatusType::getChoices(),
                     'required'  => true,
                 ))
             ->end();
