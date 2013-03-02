@@ -9,6 +9,10 @@
 
     <script src="{{ asset('bundles/mfbcms/js/media.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/mfbcms/js/dropzone.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var maxSize = {{ maxSize }};
+    </script>
 {% endblock%}
 
 {% block list_table %}

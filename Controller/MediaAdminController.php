@@ -60,8 +60,17 @@ class MediaAdminController extends Controller
 
         return $this->render(
             'MFBCmsBundle:MediaAdmin:create.html.twig', array(
-            'action' => 'create'
+            'action' => 'create',
+            'maxSize' => $this->getUploadLimit()
         ));
+    }
+
+    public function getUploadLimit()
+    {
+        $maxUpload = (int)(ini_get('upload_max_filesize'));
+        $maxPost = (int)(ini_get('post_max_size'));
+        $memoryLimit = (int)(ini_get('memory_limit'));
+        return min($maxUpload, $maxPost, $memoryLimit);
     }
 
     /**
