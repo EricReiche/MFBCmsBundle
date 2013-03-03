@@ -3,6 +3,7 @@
 namespace MFB\CmsBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use MFB\CmsBundle\Entity\Types\MediaParentType;
 
 /**
  * @category   MFB
@@ -34,15 +35,25 @@ class SearchService
 
     public function contentSuggest($type, $query)
     {
+        $entity = 'MFBCmsBundle:' . $type;
+        $repository = $this->em->getRepository($entity);
 
-        return array(
-            'query' => $query,
-            'suggestions' => array(
-                array('value' => $type . '111', 'data' => '1'),
-                array('value' => $type . '222', 'data' => '2'),
-                array('value' => $type . '333', 'data' => '3'),
-            )
-        );
+        $qb = $repository->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.' . MediaParentType::getSearchField() . ' LIKE :search')
+            ->setParameter('search', '%' . $query . '%');
+
+        $searchResult = $qb->getQuery()->getResult();
+        $result =
+            array(
+                'query' => $query,
+                'suggestions' => array()
+            );
+        /** @var News|Page|Block|Gallery|PressRelease $hit */
+        foreach ($searchResult as $hit) {
+            $result['suggestions'][] = array('value' => (string)$hit, 'data' => $hit->getId());
+        }
+        return $result;
     }
 
 

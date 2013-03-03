@@ -17,7 +17,11 @@
 
         Dropzone.options.mediaDropzone = {
             maxFilesize: {{ maxSize }},
-            url: uploadUrl = "{{ admin.generateUrl('ajax_upload') }}"
+            url: uploadUrl = "{{ admin.generateUrl('ajax_upload') }}",
+            params: {
+                type: '',
+                parentId: ''
+            }
         };
 
         var searchUrl = "{{ admin.generateUrl('ajax_search') }}";

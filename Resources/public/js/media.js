@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var parentTypeInput = $('#form_parentType');
     var parentIdInput = $('#form_id');
+    var parentSearchInput = $('#form_search');
 
     function refreshUploadParams()
     {
@@ -13,7 +14,7 @@ $(document).ready(function() {
         return parentTypeInput.val();
     }
 
-    $('#form_search').autocomplete({
+    parentSearchInput.autocomplete({
         serviceUrl: searchUrl,
         onSelect: function (suggestion) {
             $('#form_id').val(suggestion.data);
@@ -24,7 +25,11 @@ $(document).ready(function() {
         }
     });
 
-    parentTypeInput.change( refreshUploadParams );
+    parentTypeInput.change(function(){
+        parentIdInput.val('');
+        parentSearchInput.val('');
+        refreshUploadParams();
+    });
     parentIdInput.change( refreshUploadParams );
 
     refreshUploadParams();

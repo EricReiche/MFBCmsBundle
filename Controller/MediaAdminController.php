@@ -138,6 +138,10 @@ class MediaAdminController extends Controller
         $query = $request->get('query');
         $type = $request->get('type');
 
+        if (!in_array($type, MediaParentType::getValues())) {
+            return new Response('', 500);
+        }
+
         $result = $searchService->contentSuggest($type, $query);
 
         return new Response(json_encode($result));

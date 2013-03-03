@@ -22,11 +22,15 @@ class MediaParentType extends AbstractType
      */
     protected $type = 'MediaParentType';
 
-    const BLOCK = 'block';
-    const GALLERY  = 'gallery';
-    const NEWS = 'news';
-    const PAGE = 'page';
-    const PRESS = 'press';
+    /**
+     * Make sure they are named after the entities they represent!!!
+     * @see \MFB\CmsBundle\Service\SearchService::contentSuggest()
+     */
+    const BLOCK = 'Block';
+    const GALLERY  = 'Gallery';
+    const NEWS = 'News';
+    const PAGE = 'Page';
+    const PRESS = 'PressRelease';
 
     /**
      * @var array
@@ -38,4 +42,16 @@ class MediaParentType extends AbstractType
         self::PAGE => 'Page',
         self::PRESS => 'Pressrelease',
     );
+
+    /**
+     * Used for searching through entities
+     *
+     * @see \MFB\CmsBundle\Service\SearchService::contentSuggest()
+     *
+     * @return string
+     */
+    public static function getSearchField()
+    {
+        return 'title';
+    }
 }
