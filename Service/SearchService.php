@@ -23,6 +23,8 @@ class SearchService
      */
     protected $em;
 
+    const MAX_RESULTS = 20;
+
     /**
      * @param EntityManager $em Entity manager
      *
@@ -41,7 +43,9 @@ class SearchService
         $qb = $repository->createQueryBuilder('c')
             ->select('c')
             ->where('c.' . MediaParentType::getSearchField() . ' LIKE :search')
-            ->setParameter('search', '%' . $query . '%');
+            ->setParameter('search', '%' . $query . '%')
+            ->setFirstResult(0)
+            ->setMaxResults(static::MAX_RESULTS);
 
         $searchResult = $qb->getQuery()->getResult();
         $result =
