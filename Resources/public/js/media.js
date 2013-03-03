@@ -5,6 +5,16 @@ $(document).ready(function() {
 
     function refreshUploadParams()
     {
+        var oldDropZone = $('#media-dropzone');
+        oldDropZone.data("dropzone").disable();
+        oldDropZone.remove();
+        createDropZone();
+    }
+
+    function createDropZone()
+    {
+        $('#mediaform').append('<div id="media-dropzone" class="dropzone"></div>');
+        $('#media-dropzone').dropzone();
         Dropzone.options.mediaDropzone.params.type = parentTypeInput.val();
         Dropzone.options.mediaDropzone.params.parentId = parentIdInput.val();
     }
@@ -32,5 +42,5 @@ $(document).ready(function() {
     });
     parentIdInput.change( refreshUploadParams );
 
-    refreshUploadParams();
+    createDropZone();
 });

@@ -14,10 +14,11 @@
     <script type="text/javascript">
         var parentTypeInput = $('#form_parentType');
         var parentIdInput = $('#form_id');
+        var uploadUrl = "{{ admin.generateUrl('ajax_upload') }}";
 
         Dropzone.options.mediaDropzone = {
             maxFilesize: {{ maxSize }},
-            url: uploadUrl = "{{ admin.generateUrl('ajax_upload') }}",
+            url: uploadUrl,
             params: {
                 type: '',
                 parentId: ''
@@ -33,6 +34,5 @@
         {{ form_widget(form.parentType) }}
         {{ form_widget(form.search) }}
         {{ form_widget(form.id) }}
-        <div id="media-dropzone" class="dropzone"> </div>
     </form>
 {% endblock %}
