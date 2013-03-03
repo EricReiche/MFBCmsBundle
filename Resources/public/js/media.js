@@ -26,4 +26,6 @@ $(document).ready(function() {
 
     parentTypeInput.change( refreshUploadParams );
     parentIdInput.change( refreshUploadParams );
+
+    refreshUploadParams();
 });
