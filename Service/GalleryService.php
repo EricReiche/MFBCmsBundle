@@ -34,23 +34,25 @@ class GalleryService
      * @var EntityManager
      */
     protected $em;
-
-    public static $imageTypes = array('jpg', 'jpeg', 'png', 'gif');
-
-    public static $videoTypes = array('mkv', 'avi', 'mp4', 'flv', 'mov');
+    /**
+     * @var
+     */
+    protected $translator;
 
     const UPLOAD_DIR = 'uploads';
 
     const WEB_DIR = '/../../../../../../web/';
 
     /**
-     * @param EntityManager $em Entity manager
+     * @param EntityManager $em         Entity manager
+     * @param mixed         $translator Translator service
      *
      * @return GalleryService
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $translator)
     {
         $this->em = $em;
+        $this->translator = $translator;
     }
 
     /**
@@ -81,15 +83,17 @@ class GalleryService
 
     /**
      * @param UploadedFile $uploadedFile
+     * @param string       $parentType
+     * @param int          $parentId
      *
      * @return bool
      */
-    public function handleUpload($uploadedFile)
+    public function handleUpload($uploadedFile, $parentType = null, $parentId = null)
     {
         try {
             $fileName = $this->cleanFileName($uploadedFile->getClientOriginalName());
 
-            $result = $uploadedFile->move($this->getUploadPath(), $fileName);
+            $uploadedFile->move($this->getUploadPath(), $fileName);
             $shortname = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = strtolower(pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION));
 
@@ -98,18 +102,10 @@ class GalleryService
             $media->setTitle($shortname);
             $media->setStatus(StatusType::ENABLED);
 
-            //@todo
-//            $media->setParentId();
-//            $media->setParentType();
+            $media->setParentId($parentId);
+            $media->setParentType($parentType);
 
-            if (in_array($extension, static::$imageTypes)) {
-                $media->setType(MediaTypeType::PICTURE);
-            } elseif (in_array($extension, static::$videoTypes)) {
-                $media->setType(MediaTypeType::VIDEO);
-            } else {
-                // @todo translate
-                return array('error' => 'Invalid file type.');
-            }
+            $media->setType(MediaTypeType::getTypeByExtension($extension));
             $this->em->persist($media);
             $this->em->flush();
 
@@ -132,6 +128,7 @@ class GalleryService
         $shortname = $this->removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
         $fileName = $shortname . $extension;
         while (file_exists($this->getUploadPath() . $fileName)) {
+            $shortname = $this->removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
             preg_match('!^(.+\_)(\d+)$!imsU', $shortname, $matches);
             if (isset($matches[2])) {
                 $fileName = $matches[1] . ((int)$matches[2] + 1) . $extension;

@@ -854,7 +854,7 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
         _ref1 = this.options.params;
         for (key in _ref1) {
           name = _ref1[key];
-          formData.append(name, key);
+          formData.append(key, name);
         }
       }
       if (this.elementTagName = "FORM") {

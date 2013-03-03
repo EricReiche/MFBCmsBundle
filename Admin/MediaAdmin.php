@@ -68,6 +68,7 @@ class MediaAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('ajax_upload');
+        $collection->add('ajax_search');
         $collection->remove('edit');
     }
 }

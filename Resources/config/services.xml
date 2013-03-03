@@ -44,6 +44,8 @@
 
         <parameter key="mfb_cms.service.gallery.class">MFB\CmsBundle\Service\GalleryService</parameter>
 
+        <parameter key="mfb_cms.service.search.class">MFB\CmsBundle\Service\SearchService</parameter>
+
         <parameter key="mfb_cms.service.cms_menu.class">MFB\CmsBundle\Service\CmsMenuService</parameter>
         <parameter key="mfb_cms.twig.cms_menu.extension.class">MFB\CmsBundle\Twig\Extension\CmsMenuExtension</parameter>
 
@@ -116,6 +118,11 @@
         </service>
 
         <service id="mfb_cms.service.gallery" class="%mfb_cms.service.gallery.class%">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="translator"/>
+        </service>
+
+        <service id="mfb_cms.service.search" class="%mfb_cms.service.search.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 

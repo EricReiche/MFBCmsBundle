@@ -2,11 +2,13 @@
 
 namespace MFB\CmsBundle\Controller;
 
+use MFB\CmsBundle\Entity\Types\MediaParentType;
 use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
 use MFB\CmsBundle\Entity\Gallery;
 use MFB\CmsBundle\Entity\Media;
+use MFB\CmsBundle\Service\SearchService;
 use MFB\CmsBundle\Service\GalleryService;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -62,9 +64,16 @@ class MediaAdminController extends Controller
             throw new AccessDeniedException();
         }
 
+        $form = $this->createFormBuilder()
+            ->add('id', 'hidden', array('required' => false))
+            ->add('search', 'text', array('required' => false))
+            ->add('parentType', 'choice', array('choices' => MediaParentType::getChoices()))
+            ->getForm();
+
         return $this->render(
             'MFBCmsBundle:MediaAdmin:create.html.twig', array(
             'action' => 'create',
+            'form' => $form->createView(),
             'maxSize' => UploadedFile::getMaxFilesize() / 1024 / 1024
         ));
     }
@@ -87,18 +96,50 @@ class MediaAdminController extends Controller
 
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
+        $parentType = $request->get('type');
+        $parentId = $request->get('parentId');
+        if (!in_array($parentType, MediaParentType::getValues())) {
+            $parentType = null;
+            $parentId = null;
+        }
         if (null === $uploadedFile) {
             return new Response(json_encode(false));
         }
         /** @var GalleryService $galleryService */
         $galleryService = $this->get('mfb_cms.service.gallery');
 
-        $uploadResponse = $galleryService->handleUpload($uploadedFile);
+        $uploadResponse = $galleryService->handleUpload($uploadedFile, $parentType, $parentId);
 
         if (isset($uploadResponse['error'])) {
             return new Response($uploadResponse['error'], 500);
         }
 
         return new Response(json_encode(true));
+    }
+
+    /**
+     * @throws AccessDeniedException
+     *
+     * @return Response
+     */
+    public function ajaxSearchAction()
+    {
+        if (false === $this->admin->isGranted('LIST')) {
+            throw new AccessDeniedException();
+        }
+
+        /**
+         * @var \Doctrine\ORM\EntityManager $em
+         * @var SearchService               $searchService
+         */
+        $request = $this->getRequest();
+        $searchService = $this->get('mfb_cms.service.search');
+
+        $query = $request->get('query');
+        $type = $request->get('type');
+
+        $result = $searchService->contentSuggest($type, $query);
+
+        return new Response(json_encode($result));
     }
 }

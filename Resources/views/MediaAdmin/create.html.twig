@@ -7,16 +7,32 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="{{ asset('bundles/mfbcms/js/media.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/mfbcms/js/dropzone.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mfbcms/js/jquery.autocomplete.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mfbcms/js/media.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
+        var parentTypeInput = $('#form_parentType');
+        var parentIdInput = $('#form_id');
+
         Dropzone.options.mediaDropzone = {
-            maxFilesize: {{ maxSize }}
+            maxFilesize: {{ maxSize }},
+            url: uploadUrl = "{{ admin.generateUrl('ajax_upload') }}",
+            params: {
+                type: parentTypeInput.val(),
+                parentId: parentIdInput.val()
+            }
         };
+
+        var searchUrl = "{{ admin.generateUrl('ajax_search') }}";
     </script>
 {% endblock%}
 
 {% block list_table %}
-    <form action="{{ admin.generateUrl('ajax_upload') }}" class="dropzone" id="media-dropzone"></form>
+    <form action="{{ admin.generateUrl('ajax_upload') }}" id="mediaform" {{ form_enctype(form) }}>
+        {{ form_widget(form.parentType) }}
+        {{ form_widget(form.search) }}
+        {{ form_widget(form.id) }}
+        <div id="media-dropzone" class="dropzone"> </div>
+    </form>
 {% endblock %}
