@@ -91,7 +91,7 @@ class GalleryService
 
             $result = $uploadedFile->move($this->getUploadPath(), $fileName);
             $shortname = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+            $extension = strtolower(pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION));
 
             $media = new Media();
             $media->setSlug($fileName);
@@ -121,16 +121,15 @@ class GalleryService
     }
 
     /**
-     * Remove any special characters and make sure the file doesn't exist yet (or rename it)
+     * Make sure the file doesn't exist yet (or rename it)
      *
      * @param string $fileName
      * @return string
      */
     protected function cleanFileName($fileName)
     {
-        $shortname = pathinfo($fileName, PATHINFO_FILENAME);
-        $extension = '.' . pathinfo($fileName, PATHINFO_EXTENSION);
-        $shortname = preg_replace('!\W+!imsU', '_', $shortname);
+        $extension = '.' . strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        $shortname = $this->removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
         $fileName = $shortname . $extension;
         while (file_exists($this->getUploadPath() . $fileName)) {
             preg_match('!^(.+\_)(\d+)$!imsU', $shortname, $matches);
@@ -141,5 +140,16 @@ class GalleryService
             }
         }
         return $fileName;
+    }
+
+    /**
+     * Remove any special characters
+     *
+     * @param string $fileName
+     * @return string
+     */
+    protected function removeSpecialChars($fileName)
+    {
+        return preg_replace('!\W+!imsU', '_', $fileName);
     }
 }
