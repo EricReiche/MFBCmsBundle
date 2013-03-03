@@ -38,7 +38,7 @@ class PageAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('releasedAt')
-            ->add('active')
+            ->add('active', null, array('required' => false))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),

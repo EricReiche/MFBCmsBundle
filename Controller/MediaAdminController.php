@@ -82,7 +82,9 @@ class MediaAdminController extends Controller
         return $this->render(
             'MFBCmsBundle:MediaAdmin:embed.html.twig', array(
             'action' => 'embed',
-            'files' => $repo->findByType($type, $id)
+            'files' => $repo->findByType($type, $id),
+            'type' => $type,
+            'id' => $id
         ));
     }
 

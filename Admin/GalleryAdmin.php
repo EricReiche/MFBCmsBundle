@@ -9,7 +9,6 @@ use MFB\CmsBundle\Entity\Gallery;
 use MFB\CmsBundle\Entity\Media;
 
 use MFB\CmsBundle\Entity\Types\GalleryTypeType,
-    MFB\CmsBundle\Entity\Types\StatusType,
     MFB\CmsBundle\Entity\Types\MediaParentType,
     MFB\CmsBundle\Entity\Types\MediaTypeType;
 
@@ -68,7 +67,7 @@ class GalleryAdmin extends Admin
                 'choices' => GalleryTypeType::getChoices(),
                 'required'  => true,
             ))
-            ->add('active')
+            ->add('active', null, array('required' => false))
             ->end();
     }
 

@@ -5,10 +5,7 @@ use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Form\FormMapper,
     Sonata\AdminBundle\Datagrid\ListMapper;
 
-use MFB\CmsBundle\Entity\Block;
-
-use MFB\CmsBundle\Entity\Types\BlockTypeType,
-    MFB\CmsBundle\Entity\Types\StatusType;
+use MFB\CmsBundle\Entity\Types\BlockTypeType;
 
 use MFB\CmsBundle\Service\CmsBlockService;
 
@@ -67,7 +64,7 @@ class BlockAdmin extends Admin
                     'choices' => BlockTypeType::getChoices(),
                     'required'  => true,
                 ))
-                ->add('active')
+                ->add('active', null, array('required' => false))
             ->end();
     }
 

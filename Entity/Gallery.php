@@ -5,7 +5,6 @@ namespace MFB\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use MFB\CmsBundle\Entity\Types\GalleryTypeType;
-use MFB\CmsBundle\Entity\Types\StatusType;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 

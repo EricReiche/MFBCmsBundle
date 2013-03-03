@@ -8,8 +8,6 @@ use Doctrine\ORM\EntityManager;
 
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
-use MFB\CmsBundle\Entity\Types\StatusType;
-
 /**
  * @category   MFB
  * @package    MFBCmsBundle
@@ -58,9 +56,9 @@ class CmsBlockService
         /** @var $blockRepository \MFB\CmsBundle\Entity\Repository\BlockRepository */
         $blockRepository = $this->em->getRepository('MFBCmsBundle:Block');
         /** @var $block Block */
-        $block = $blockRepository->findOneBy(array('slug' => $name, 'status' => StatusType::ENABLED));
+        $block = $blockRepository->findOneBy(array('slug' => $name, 'active' => true));
 
-        if ($block && ($block->getStatus() == StatusType::ENABLED)) {
+        if ($block && ($block->getActive() == true)) {
             $content = $block->getContent();
         }
 

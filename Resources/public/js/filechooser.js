@@ -19,6 +19,12 @@ function addImageLink(id)
     $('.btnTarget').append(link);
 }
 
+function addGallery(id, type)
+{
+    var link = "&#123;&#123; imgGallery(" + type + ", " + id + ", 150, 150) &#125;&#125;"
+    $('.btnTarget').append(link);
+}
+
 $(document).ready(function() {
 
     $('textarea').each(function(){

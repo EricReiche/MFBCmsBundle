@@ -18,13 +18,18 @@ use Doctrine\ORM\EntityRepository;
 class MediaRepository extends EntityRepository
 {
     /**
-     * @param string $type
+     * @param string $parentType
      * @param int    $id
+     * @param string $mediaType
      *
      * @return array
      */
-    public function findByType($type, $id)
+    public function findByType($parentType, $id, $mediaType = null)
     {
-        return $this->findBy(array('parentType' => $type, 'parentId' => $id));
+        $filter = array('parentType' => $parentType, 'parentId' => $id);
+        if (!is_null($mediaType)) {
+            $filter['type'] = $mediaType;
+        }
+        return $this->findBy($filter);
     }
 }

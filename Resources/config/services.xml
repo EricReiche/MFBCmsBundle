@@ -133,6 +133,7 @@
         <service id="mfb_cms.service.gallery" class="%mfb_cms.service.gallery.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="translator"/>
+            <argument type="service" id="service_container"/>
         </service>
 
         <service id="mfb_cms.service.search" class="%mfb_cms.service.search.class%">

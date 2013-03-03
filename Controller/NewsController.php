@@ -2,10 +2,12 @@
 
 namespace MFB\CmsBundle\Controller;
 
+use MFB\CmsBundle\Entity\News;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @category   MFB
@@ -29,10 +31,9 @@ class NewsController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         /** @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            'SELECT n FROM MFBCmsBundle:News n ORDER BY n.releasedAt DESC'
+            'SELECT n FROM MFBCmsBundle:News n WHERE n.active = 1 ORDER BY n.releasedAt DESC'
         );
         $query->execute();
 
@@ -50,7 +51,12 @@ class NewsController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $repo = $em->getRepository('MFBCmsBundle:News');
+        /** @var News $news */
         $news = $repo->find($id);
+
+        if ($news->getActive() != true) {
+            throw new NotFoundHttpException;
+        }
 
         return array('news' => $news);
     }

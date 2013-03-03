@@ -2,6 +2,7 @@
 
 namespace MFB\CmsBundle\Twig\Extension;
 
+use MFB\CmsBundle\Entity\Types\MediaParentType;
 use MFB\CmsBundle\Service\GalleryService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -45,6 +46,7 @@ class CmsMediaExtension extends \Twig_Extension
         return array(
             'img' => new \Twig_Function_Method($this, 'getImage'),
             'imgLink' => new \Twig_Function_Method($this, 'getImageLink'),
+            'imgGallery' => new \Twig_Function_Method($this, 'getImageGallery'),
         );
     }
 
@@ -74,6 +76,24 @@ class CmsMediaExtension extends \Twig_Extension
     public function getImageLink($id, $width = null, $height = null)
     {
         return $this->galleryService->getMediaLink($id, $width, $height);
+    }
+
+    /**
+     * Returns gallery code
+     *
+     * @param string $type
+     * @param int    $id
+     * @param int    $width
+     * @param int    $height
+     *
+     * @return string
+     */
+    public function getImageGallery($type, $id, $width = null, $height = null)
+    {
+        if (!in_array($type, MediaParentType::getValues()) || (int)$id < 1) {
+            return '<!-- error including gallery -->';
+        }
+        return $this->galleryService->getGallery($type, (int)$id, $width, $height);
     }
 
     /**

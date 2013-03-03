@@ -14,7 +14,6 @@ use MFB\CmsBundle\Entity\Gallery;
 use MFB\CmsBundle\Entity\Media;
 
 use MFB\CmsBundle\Entity\Types\GalleryTypeType,
-    MFB\CmsBundle\Entity\Types\StatusType,
     MFB\CmsBundle\Entity\Types\MediaParentType,
     MFB\CmsBundle\Entity\Types\MediaTypeType;
 
@@ -41,6 +40,11 @@ class GalleryService
      */
     protected $translator;
 
+    /**
+     * @var mixed
+     */
+    protected $container;
+
     const UPLOAD_DIR = 'uploads';
 
     const WEB_DIR = '/../../../../../../web/';
@@ -50,13 +54,15 @@ class GalleryService
     /**
      * @param EntityManager $em         Entity manager
      * @param mixed         $translator Translator service
+     * @param mixed         $container  DI container
      *
      * @return GalleryService
      */
-    public function __construct(EntityManager $em, $translator)
+    public function __construct(EntityManager $em, $translator, $container)
     {
         $this->em = $em;
         $this->translator = $translator;
+        $this->container  = $container;
     }
 
     /**
@@ -170,16 +176,16 @@ class GalleryService
     /**
      * Load one Media object by ID
      *
-     * @param Media|int $id
+     * @param Media|int $media
      * @param int       $width
      * @param int       $height
      *
      * @return string
      */
-    public function getMediaUrl($id, $width = null, $height = null)
+    public function getMediaUrl($media, $width = null, $height = null)
     {
-        if (!($id instanceof Media)) {
-            $media = $this->loadImage($id);
+        if (!($media instanceof Media)) {
+            $media = $this->loadImage($media);
         }
         $orignalUrl = static::getUploadUrl() . static::ORIG_DIR . $media->getSlug();
         $orignalPath = static::getUploadPath() . static::ORIG_DIR . $media->getSlug();
@@ -212,17 +218,46 @@ class GalleryService
     /**
      * Load one Media object by ID
      *
-     * @param int $id
-     * @param int $width
-     * @param int $height
+     * @param Media|int $media
+     * @param int       $width
+     * @param int       $height
      *
      * @return string
      */
-    public function getMediaLink($id, $width, $height)
+    public function getMediaLink($media, $width, $height)
     {
-        $media = $this->loadImage($id);
+        if (!($media instanceof Media)) {
+            $media = $this->loadImage($media);
+        }
         $original = $this->getMediaUrl($media);
         $thumbNail = $this->getMediaUrl($media, $width, $height);
-        return '<a href="' . $original . '><img src="' . $thumbNail . '" class="thumbnail"/></a>';
+
+        return $this->container->get('templating')->render(
+            'MFBCmsBundle:Media:link.html.twig',
+            array('original' => $original, 'thumb' => $thumbNail)
+        );
+    }
+
+    /**
+     * Load one Media object by ID
+     *
+     * @param string $type
+     * @param int    $id
+     * @param int    $width
+     * @param int    $height
+     *
+     * @return string
+     */
+    public function getGallery($type, $id, $width, $height)
+    {
+        $gallery = $this->em->getRepository('MFBCmsBundle:Media')->findByType($type, $id, MediaTypeType::PICTURE);
+        return $this->container->get('templating')->render(
+            'MFBCmsBundle:Media:gallery.html.twig',
+            array(
+                'gallery' => $gallery,
+                'width' => $width,
+                'height' => $height
+            )
+        );
     }
 }

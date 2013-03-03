@@ -6,11 +6,7 @@ use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Datagrid\ListMapper,
     Sonata\AdminBundle\Route\RouteCollection;
 
-use MFB\CmsBundle\Entity\Gallery;
-use MFB\CmsBundle\Entity\Media;
-
 use MFB\CmsBundle\Entity\Types\GalleryTypeType,
-    MFB\CmsBundle\Entity\Types\StatusType,
     MFB\CmsBundle\Entity\Types\MediaParentType,
     MFB\CmsBundle\Entity\Types\MediaTypeType;
 

@@ -56,7 +56,7 @@ class NewsAdmin extends Admin
             ->add('releasedAt', null, array('required' => true))
             ->add('title', null, array('required' => true))
             ->add('subTitle', null, array('required' => false))
-            ->add('active')
+            ->add('active', null, array('required' => false))
             ->add('content', null, array(
                 'required' => false,
                 'attr' => array(

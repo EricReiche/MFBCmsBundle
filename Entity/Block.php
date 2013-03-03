@@ -5,8 +5,7 @@ namespace MFB\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use MFB\CmsBundle\Entity\Types\BlockTypeType,
-    MFB\CmsBundle\Entity\Types\StatusType;
+use MFB\CmsBundle\Entity\Types\BlockTypeType;
 
 /**
  * @category   MFB

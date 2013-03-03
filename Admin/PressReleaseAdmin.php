@@ -55,7 +55,7 @@ class PressReleaseAdmin extends Admin
             ->add('releasedAt', null, array('required' => true))
             ->add('title', null, array('required' => true))
             ->add('subTitle', null, array('required' => false))
-            ->add('active')
+            ->add('active', null, array('required' => false))
             ->add('teaser', null, array(
                 'required' => false,
                 'attr' => array(
