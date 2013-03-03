@@ -23,6 +23,6 @@
     <strong>{{ pressrelease.subTitle|raw }}</strong>
 
     {{ pressrelease.teaser|raw }}
-    {{ pressrelease.content|raw }}
+    {{ include(template_from_string(pressrelease.content) }}
     {{ cmsblock('presscurrent_footer') }}
 {% endblock %}

@@ -22,5 +22,6 @@
     </h2>
     <strong>{{ news.subTitle|raw }}</strong>
 
-    {{ news.content|raw }}
+    {{ include(template_from_string(news.content) }}
+    {#{{ include(template_from_string("{{ 'test' }}") }}#}
 {% endblock %}

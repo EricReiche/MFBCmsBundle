@@ -15,5 +15,5 @@
 {% block title %}{{ page.title }}{% endblock %}
 
 {% block content %}
-    {{ page.content|raw }}
+    {{ include(template_from_string(page.content) }}
 {% endblock %}

@@ -125,6 +125,10 @@
             <argument type="service" id="mfb_cms.service.gallery" />
         </service>
 
+        <service id="twig.extension.stringloader" class="Twig_Extension_StringLoader" public="true">
+            <tag name="twig.extension"/>
+        </service>
+
         <service id="mfb_cms.service.cms_block" class="%mfb_cms.service.cms_block.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="twigstring"/>
