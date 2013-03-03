@@ -2,7 +2,8 @@
 
 namespace MFB\CmsBundle\Service;
 
-use MFB\CmsBundle\Entity\Block;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
 
 use Doctrine\ORM\EntityManager;
 
@@ -169,26 +170,35 @@ class GalleryService
     /**
      * Load one Media object by ID
      *
-     * @param int $id
-     * @param int $width
-     * @param int $height
+     * @param Media|int $id
+     * @param int       $width
+     * @param int       $height
      *
      * @return string
      */
-    public function getMediaUrl($id, $width, $height)
+    public function getMediaUrl($id, $width = null, $height = null)
     {
-        $media = $this->loadImage($id);
-        $orignal = static::getUploadUrl() . $media->getSlug();
+        if (!($id instanceof Media)) {
+            $media = $this->loadImage($id);
+        }
+        $orignalUrl = static::getUploadUrl() . static::ORIG_DIR . $media->getSlug();
+        $orignalPath = static::getUploadPath() . static::ORIG_DIR . $media->getSlug();
 
-        if (is_null($width) && is_null($height)) {
-            return $orignal;
+        if (!file_exists($orignalPath)) {
+            return false;
         }
 
-        $thumbnailDir = static::getUploadUrl() . $width . 'x' . $height . '/';
+        if (is_null($width) && is_null($height)) {
+            return $orignalUrl;
+        }
+
+        $thumbnailDir = static::getUploadPath() . $width . 'x' . $height . '/';
+        $thumbnailUrlDir = static::getUploadUrl() . $width . 'x' . $height . '/';
         $thumbnailPath = $thumbnailDir . $media->getSlug();
+        $thumbnailUrl = $thumbnailUrlDir . $media->getSlug();
         if (!file_exists($thumbnailPath)) {
             $imagine = new Imagine();
-            $image = $imagine->open($orignal);
+            $image = $imagine->open($orignalPath);
             $thumbnail = $image->thumbnail(new Box($width, $height));
             if (!is_dir($thumbnailDir)) {
                 mkdir($thumbnailDir, 0777, true);
@@ -196,6 +206,23 @@ class GalleryService
             $thumbnail->save($thumbnailPath);
         }
 
-        return $thumbnailPath;
+        return $thumbnailUrl;
+    }
+
+    /**
+     * Load one Media object by ID
+     *
+     * @param int $id
+     * @param int $width
+     * @param int $height
+     *
+     * @return string
+     */
+    public function getMediaLink($id, $width, $height)
+    {
+        $media = $this->loadImage($id);
+        $original = $this->getMediaUrl($media);
+        $thumbNail = $this->getMediaUrl($media, $width, $height);
+        return '<a href="' . $original . '><img src="' . $thumbNail . '" class="thumbnail"/></a>';
     }
 }

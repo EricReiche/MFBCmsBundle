@@ -1,6 +1,7 @@
 {% for file in files %}
     <div class="image">
-        <img src="{{ img(file.id, 100, 100) }}"/><br/>
-        <input type="text" value="&#123;&#123; img(file.id) }}" />
+        <img src="{{ img(file.id, 160, 160) }}"/><br/>
+        <input class="thumbLink" type="text" value="&#123;&#123; img({{ file.id }}, 100, 100) &#125;&#125;" /><br/>
+        <input class="thumbLink" type="text" value="&#123;&#123; imgLink({{ file.id }}, 100, 100) &#125;&#125;" />
     </div>
 {% endfor %}

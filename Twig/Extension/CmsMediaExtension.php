@@ -43,7 +43,8 @@ class CmsMediaExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'img' => new \Twig_Function_Method($this, 'getImage')
+            'img' => new \Twig_Function_Method($this, 'getImage'),
+            'imgLink' => new \Twig_Function_Method($this, 'getImageLink'),
         );
     }
 
@@ -51,12 +52,28 @@ class CmsMediaExtension extends \Twig_Extension
      * Returns image URL
      *
      * @param int $id
+     * @param int $width
+     * @param int $height
      *
      * @return string
      */
     public function getImage($id, $width = null, $height = null)
     {
         return $this->galleryService->getMediaUrl($id, $width, $height);
+    }
+
+    /**
+     * Returns image URL
+     *
+     * @param int $id
+     * @param int $width
+     * @param int $height
+     *
+     * @return string
+     */
+    public function getImageLink($id, $width = null, $height = null)
+    {
+        return $this->galleryService->getMediaLink($id, $width, $height);
     }
 
     /**
