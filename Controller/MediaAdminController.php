@@ -4,6 +4,7 @@ namespace MFB\CmsBundle\Controller;
 
 use MFB\CmsBundle\Entity\Types\MediaParentType;
 use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
+use MFB\CmsBundle\Form\UploadForm;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
 use MFB\CmsBundle\Entity\Gallery;
@@ -64,11 +65,7 @@ class MediaAdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        $form = $this->createFormBuilder()
-            ->add('id', 'hidden', array('required' => false))
-            ->add('search', 'text', array('required' => false))
-            ->add('parentType', 'choice', array('choices' => MediaParentType::getChoices()))
-            ->getForm();
+        $form = $this->createForm(new UploadForm());
 
         return $this->render(
             'MFBCmsBundle:MediaAdmin:create.html.twig', array(

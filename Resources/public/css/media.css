@@ -1,4 +1,9 @@
 
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+
 .dropzone,
 .dropzone * {
     -webkit-box-sizing: border-box;
@@ -126,7 +131,7 @@
 }
 .dropzone {
     border: 1px solid rgba(0,0,0,0.03);
-    min-height: 200px;
+    min-height: 360px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
     background: rgba(0,0,0,0.03);
@@ -141,9 +146,27 @@
     -o-transition: opacity 0.3s ease-in-out;
     -ms-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
+    background-image: url("/bundles/mfbcms/images/spritemap.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    position: absolute;
+    width: 428px;
+    height: 123px;
+    margin-left: -214px;
+    margin-top: -61.5px;
+    top: 50%;
+    left: 50%;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+    .dropzone .default.message {
+        background-image: url("/bundles/mfbcms/images/spritemap@2x.png");
+        -webkit-background-size: 428px 406px;
+        -moz-background-size: 428px 406px;
+        background-size: 428px 406px;
+    }
 }
 .dropzone .default.message span {
-    /*display: none;*/
+    display: none;
 }
 .dropzone.square .default.message {
     background-position: 0 -123px;

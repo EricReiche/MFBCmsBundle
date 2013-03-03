@@ -1,0 +1,20 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/mfbcms/js/dropzone.js') }}" type="text/javascript"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/mfbcms/css/admin.css') }}" type="text/css" media="all">
+{% endblock%}
+
+{% block sonata_admin_right_sidebar %}
+    <div class="right-sidebar span4">
+        <form action="{{ path('admin_mfb_cms_media_ajax_upload') }}" id="media-dropzone" class="dropzone">
+            <input type="hidden" name="type" value="{{ classname(object) }}"/>
+            <input type="hidden" name="parentId" value="{{ admin.id(object) }}"/>
+        </form>
+    </div>
+{% endblock %}
