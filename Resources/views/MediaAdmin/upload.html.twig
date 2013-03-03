@@ -1,0 +1,5 @@
+<form action="{{ path('admin_mfb_cms_media_ajax_upload') }}" id="media-dropzone" class="dropzone">
+    <input type="hidden" name="type" value="{{ classname(object) }}"/>
+    <input type="hidden" name="parentId" value="{{ admin.id(object) }}"/>
+    <div class="default message"><span>{{ "Drop files here to upload"|trans }}</span></div>
+</form>

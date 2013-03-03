@@ -50,6 +50,8 @@
         <parameter key="mfb_cms.twig.cms_menu.extension.class">MFB\CmsBundle\Twig\Extension\CmsMenuExtension</parameter>
         <parameter key="mfb_cms.twig.cms_helper.extension.class">MFB\CmsBundle\Twig\Extension\CmsHelperExtension</parameter>
 
+        <parameter key="mfb_cms.twig.cms_media.extension.class">MFB\CmsBundle\Twig\Extension\CmsMediaExtension</parameter>
+
         <parameter key="mfb_cms.service.locale.class">MFB\CmsBundle\Service\LocaleService</parameter>
     </parameters>
 
@@ -114,9 +116,13 @@
             <argument type="service" id="mfb_cms.service.cms_menu" />
         </service>
 
-
         <service id="twig.extension.cms_helper" class="%mfb_cms.twig.cms_helper.extension.class%" public="true">
             <tag name="twig.extension"/>
+        </service>
+
+        <service id="twig.extension.cms_media" class="%mfb_cms.twig.cms_media.extension.class%" public="true">
+            <tag name="twig.extension"/>
+            <argument type="service" id="mfb_cms.service.gallery" />
         </service>
 
         <service id="mfb_cms.service.cms_block" class="%mfb_cms.service.cms_block.class%">

@@ -69,6 +69,7 @@ class MediaAdmin extends Admin
     {
         $collection->add('ajax_upload');
         $collection->add('ajax_search');
+        $collection->add('embed');
         $collection->remove('edit');
     }
 }

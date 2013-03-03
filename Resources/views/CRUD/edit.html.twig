@@ -1,9 +1,15 @@
 {% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
 
+{% set fileChooser = url('admin_mfb_cms_media_embed', { 'id': object.id, 'type': classname(object) }) %}
+
 {% block javascripts %}
     {{ parent() }}
 
     <script src="{{ asset('bundles/mfbcms/js/dropzone.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/mfbcms/js/filechooser.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        var fileChooserUrl = "{{ fileChooser }}";
+    </script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -13,11 +19,12 @@
 {% block sonata_admin_right_sidebar %}
     <div class="right-sidebar span4">
         {% if admin.id(object) %}
-            <form action="{{ path('admin_mfb_cms_media_ajax_upload') }}" id="media-dropzone" class="dropzone">
-                <input type="hidden" name="type" value="{{ classname(object) }}"/>
-                <input type="hidden" name="parentId" value="{{ admin.id(object) }}"/>
-                <div class="default message"><span>{{ "Drop files here to upload"|trans }}</span></div>
-            </form>
+            {% include 'MFBCmsBundle:MediaAdmin:upload.html.twig'
+                with {'object': object}
+            %}
+            <div id="filechooser">
+                {% render fileChooser %}
+            </div>
         {% else %}
             {{ "Uploading enabled after save"|trans }}
         {% endif %}

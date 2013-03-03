@@ -59,6 +59,40 @@ class MediaAdminController extends Controller
      *
      * @return Response
      */
+    public function embedAction()
+    {
+        if (false === $this->admin->isGranted('LIST')) {
+            throw new AccessDeniedException();
+        }
+
+        /**
+         * @var \Doctrine\ORM\EntityManager                     $em
+         * @var \MFB\CmsBundle\Entity\Repository\MediaRepository $repo
+         */
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository($this->admin->getClass());
+        $request = $this->getRequest();
+        $type = $request->get('type');
+        $id = (int)$request->get('id');
+
+        if (!in_array($type, MediaParentType::getValues()) || $id < 1) {
+            return new Response('Error loading image chooser.', 500);
+        }
+
+        return $this->render(
+            'MFBCmsBundle:MediaAdmin:embed.html.twig', array(
+            'action' => 'embed',
+            'files' => $repo->findByType($type, $id)
+        ));
+    }
+
+    /**
+     * return the Response object associated to the list action
+     *
+     * @throws AccessDeniedException
+     *
+     * @return Response
+     */
     public function createAction()
     {
         if (false === $this->admin->isGranted('CREATE')) {

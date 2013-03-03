@@ -27,7 +27,8 @@
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
         "presta/sitemap-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "1.1.*@dev",
-        "phpexiftool/phpexiftool": "dev-master"
+        "phpexiftool/phpexiftool": "dev-master",
+        "imagine/Imagine": "dev-master"
     },
     "target-dir": "MFB/CmsBundle",
     "autoload": {

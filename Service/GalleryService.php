@@ -34,6 +34,7 @@ class GalleryService
      * @var EntityManager
      */
     protected $em;
+
     /**
      * @var
      */
@@ -42,6 +43,8 @@ class GalleryService
     const UPLOAD_DIR = 'uploads';
 
     const WEB_DIR = '/../../../../../../web/';
+
+    const ORIG_DIR = 'original/';
 
     /**
      * @param EntityManager $em         Entity manager
@@ -82,53 +85,18 @@ class GalleryService
     }
 
     /**
-     * @param UploadedFile $uploadedFile
-     * @param string       $parentType
-     * @param int          $parentId
-     *
-     * @return bool
-     */
-    public function handleUpload($uploadedFile, $parentType = null, $parentId = null)
-    {
-        try {
-            $fileName = $this->cleanFileName($uploadedFile->getClientOriginalName());
-
-            $uploadedFile->move($this->getUploadPath(), $fileName);
-            $shortname = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = strtolower(pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION));
-
-            $media = new Media();
-            $media->setSlug($fileName);
-            $media->setTitle($shortname);
-            $media->setStatus(StatusType::ENABLED);
-
-            $media->setParentId($parentId);
-            $media->setParentType($parentType);
-
-            $media->setType(MediaTypeType::getTypeByExtension($extension));
-            $this->em->persist($media);
-            $this->em->flush();
-
-            return array('file' => $uploadedFile);
-        } catch (\Exception $e) {
-            // @todo error handling
-            return array('error' => $e->getMessage());
-        }
-    }
-
-    /**
      * Make sure the file doesn't exist yet (or rename it)
      *
      * @param string $fileName
      * @return string
      */
-    protected function cleanFileName($fileName)
+    public static function cleanFileName($fileName)
     {
         $extension = '.' . strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-        $shortname = $this->removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
+        $shortname = static::removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
         $fileName = $shortname . $extension;
-        while (file_exists($this->getUploadPath() . $fileName)) {
-            $shortname = $this->removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
+        while (file_exists(static::getUploadPath() . static::ORIG_DIR . $fileName)) {
+            $shortname = static::removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
             preg_match('!^(.+\_)(\d+)$!imsU', $shortname, $matches);
             if (isset($matches[2])) {
                 $fileName = $matches[1] . ((int)$matches[2] + 1) . $extension;
@@ -145,8 +113,89 @@ class GalleryService
      * @param string $fileName
      * @return string
      */
-    protected function removeSpecialChars($fileName)
+    public static function removeSpecialChars($fileName)
     {
         return preg_replace('!\W+!imsU', '_', $fileName);
+    }
+
+    /**
+     * @param UploadedFile $uploadedFile
+     * @param string       $parentType
+     * @param int          $parentId
+     *
+     * @return bool
+     */
+    public function handleUpload($uploadedFile, $parentType = null, $parentId = null)
+    {
+        try {
+            $fileName = $this->cleanFileName($uploadedFile->getClientOriginalName());
+
+            $uploadedFile->move($this->getUploadPath() . static::ORIG_DIR, $fileName);
+            $shortname = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = strtolower(pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION));
+
+            $media = new Media();
+            $media->setSlug($fileName);
+            $media->setTitle($shortname);
+            $media->setActive(true);
+
+            $media->setParentId($parentId);
+            $media->setParentType($parentType);
+
+            $media->setType(MediaTypeType::getTypeByExtension($extension));
+            $this->em->persist($media);
+            $this->em->flush();
+
+            return array('file' => $uploadedFile);
+        } catch (\Exception $e) {
+            // @todo error handling
+            return array('error' => $e->getMessage());
+        }
+    }
+
+    /**
+     * Load one Media object by ID
+     *
+     * @param int $id
+     *
+     * @return Media
+     */
+    public function loadImage($id)
+    {
+        $repo = $this->em->getRepository('MFBCmsBundle:Media');
+        return $repo->find($id);
+    }
+
+    /**
+     * Load one Media object by ID
+     *
+     * @param int $id
+     * @param int $width
+     * @param int $height
+     *
+     * @return string
+     */
+    public function getMediaUrl($id, $width, $height)
+    {
+        $media = $this->loadImage($id);
+        $orignal = static::getUploadUrl() . $media->getSlug();
+
+        if (is_null($width) && is_null($height)) {
+            return $orignal;
+        }
+
+        $thumbnailDir = static::getUploadUrl() . $width . 'x' . $height . '/';
+        $thumbnailPath = $thumbnailDir . $media->getSlug();
+        if (!file_exists($thumbnailPath)) {
+            $imagine = new Imagine();
+            $image = $imagine->open($orignal);
+            $thumbnail = $image->thumbnail(new Box($width, $height));
+            if (!is_dir($thumbnailDir)) {
+                mkdir($thumbnailDir, 0777, true);
+            }
+            $thumbnail->save($thumbnailPath);
+        }
+
+        return $thumbnailPath;
     }
 }

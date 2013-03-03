@@ -17,4 +17,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class MediaRepository extends EntityRepository
 {
+    /**
+     * @param string $type
+     * @param int    $id
+     *
+     * @return array
+     */
+    public function findByType($type, $id)
+    {
+        return $this->findBy(array('parentType' => $type, 'parentId' => $id));
+    }
 }

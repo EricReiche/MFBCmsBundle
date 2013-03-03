@@ -1,0 +1,6 @@
+{% for file in files %}
+    <div class="image">
+        <img src="{{ img(file.id, 100, 100) }}"/><br/>
+        <input type="text" value="&#123;&#123; img(file.id) }}" />
+    </div>
+{% endfor %}
