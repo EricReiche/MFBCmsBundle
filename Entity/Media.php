@@ -7,7 +7,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use MFB\CmsBundle\Entity\Types\MediaTypeType;
 use MFB\CmsBundle\Entity\Types\MediaParentType;
-use MFB\CmsBundle\Entity\Types\StatusType;
 
 /**
  * @category   MFB
@@ -77,11 +76,11 @@ class Media
     protected $parentId;
 
     /**
-     * @ORM\Column(name="status", type="string", length=10, nullable=false)
+     * @var string $active
      *
-     * @var string $status
+     * @ORM\Column(name="active", type="boolean")
      */
-    protected $status = StatusType::DISABLED;
+    protected $active;
 
     /**
      * @var \DateTime $createdAt
@@ -200,23 +199,23 @@ class Media
     }
 
     /**
-     * Set status
+     * Set active
      *
-     * @param string $status
+     * @param bool $active
      */
-    public function setStatus($status)
+    public function setActive($active)
     {
-        $this->status = $status;
+        $this->active = $active;
     }
 
     /**
-     * Get status
+     * Get active
      *
-     * @return string
+     * @return bool
      */
-    public function getStatus()
+    public function getActive()
     {
-        return $this->status;
+        return $this->active;
     }
 
     /**

@@ -67,11 +67,7 @@ class BlockAdmin extends Admin
                     'choices' => BlockTypeType::getChoices(),
                     'required'  => true,
                 ))
-                ->add('status', 'choice', array(
-                    'label' => 'Status',
-                    'choices' => StatusType::getChoices(),
-                    'required'  => true,
-                ))
+                ->add('active')
             ->end();
     }
 

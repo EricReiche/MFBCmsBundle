@@ -68,11 +68,7 @@ class GalleryAdmin extends Admin
                 'choices' => GalleryTypeType::getChoices(),
                 'required'  => true,
             ))
-            ->add('status', 'choice', array(
-                'label' => 'Status',
-                'choices' => StatusType::getChoices(),
-                'required'  => true,
-            ))
+            ->add('active')
             ->end();
     }
 

@@ -61,6 +61,13 @@ class News
     protected $slug;
 
     /**
+     * @var string $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    protected $active;
+
+    /**
      * @var \datetime $releasedAt
      *
      * @ORM\Column(name="released_at", type="datetime")
@@ -181,6 +188,26 @@ class News
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set active
+     *
+     * @param bool $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * Get active
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 
     /**

@@ -62,11 +62,11 @@ class Block
     protected $type = BlockTypeType::TEXT;
 
     /**
-     * @ORM\Column(name="status", type="string", length=255, nullable=false)
+     * @var string $active
      *
-     * @var string $status
+     * @ORM\Column(name="active", type="boolean")
      */
-    protected $status = StatusType::ENABLED;
+    protected $active;
 
     /**
      * @var \DateTime $createdAt
@@ -185,23 +185,23 @@ class Block
     }
 
     /**
-     * Set status
+     * Set active
      *
-     * @param string $status
+     * @param bool $active
      */
-    public function setStatus($status)
+    public function setActive($active)
     {
-        $this->status = $status;
+        $this->active = $active;
     }
 
     /**
-     * Get status
+     * Get active
      *
-     * @return string
+     * @return bool
      */
-    public function getStatus()
+    public function getActive()
     {
-        return $this->status;
+        return $this->active;
     }
 
     /**
