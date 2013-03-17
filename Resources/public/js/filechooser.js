@@ -9,19 +9,19 @@ function reloadImageChooser()
 
 function addImage(id)
 {
-    var link = "&#123;&#123; img(" + id + ", 150, 150) &#125;&#125;"
+    var link = "&#123;&#123; img(" + id + ", 150, 150) &#125;&#125;";
     $('.btnTarget').append(link);
 }
 
 function addImageLink(id)
 {
-    var link = "&#123;&#123; imgLink(" + id + ", 150, 150) &#125;&#125;"
+    var link = "&#123;&#123; imgLink(" + id + ", 150, 150) &#125;&#125;";
     $('.btnTarget').append(link);
 }
 
 function addGallery(id, type)
 {
-    var link = "&#123;&#123; imgGallery(" + type + ", " + id + ", 150, 150) &#125;&#125;"
+    var link = "&#123;&#123; imgGallery(" + type + ", " + id + ", 150, 150) &#125;&#125;";
     $('.btnTarget').append(link);
 }
 
