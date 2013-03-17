@@ -4,6 +4,8 @@ namespace MFB\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM,
     Doctrine\Common\Collections\ArrayCollection;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -66,6 +68,14 @@ class News
      * @ORM\Column(name="active", type="boolean")
      */
     protected $active;
+
+    /**
+     * @var User $author
+     *
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $author;
 
     /**
      * @var \datetime $releasedAt
@@ -271,5 +281,28 @@ class News
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set author
+     *
+     * @param User $author
+     * @return News
+     */
+    public function setAuthor(User $author = null)
+    {
+        $this->author = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }
