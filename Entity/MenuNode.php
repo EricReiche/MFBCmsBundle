@@ -15,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  *
  * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="menu_nodes")
+ * @ORM\Table(name="cms_menu_nodes")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class MenuNode

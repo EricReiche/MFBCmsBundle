@@ -17,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * MFB\CmsBundle\Entity\News
  *
- * @ORM\Table(name="news")
+ * @ORM\Table(name="cms_news")
  * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\NewsRepository")
  */
 class News
@@ -73,7 +73,7 @@ class News
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-//    protected $author;
+    protected $author;
 
     /**
      * @var \datetime $releasedAt

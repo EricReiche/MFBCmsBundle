@@ -18,7 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * MFB\CmsBundle\Entity\PressRelease
  *
- * @ORM\Table(name="press_releases")
+ * @ORM\Table(name="cms_press_releases")
  * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\PressReleaseRepository")
  */
 class PressRelease
@@ -103,7 +103,7 @@ class PressRelease
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -123,7 +123,7 @@ class PressRelease
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {

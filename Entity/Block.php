@@ -18,7 +18,7 @@ use MFB\CmsBundle\Entity\Types\BlockTypeType;
  *
  * MFB\CmsBundle\Entity\Block
  *
- * @ORM\Table(name="blocks")
+ * @ORM\Table(name="cms_blocks")
  * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\BlockRepository")
  */
 class Block

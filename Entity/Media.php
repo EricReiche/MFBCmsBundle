@@ -19,7 +19,7 @@ use MFB\CmsBundle\Entity\Types\MediaParentType;
  *
  * MFB\CmsBundle\Entity\Media
  *
- * @ORM\Table(name="medias")
+ * @ORM\Table(name="cms_medias")
  * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\MediaRepository")
  */
 class Media

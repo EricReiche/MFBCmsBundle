@@ -17,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * MFB\CmsBundle\Entity\Page
  *
- * @ORM\Table(name="page")
+ * @ORM\Table(name="cms_pages")
  * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\PageRepository")
  */
 class Page

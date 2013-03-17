@@ -19,7 +19,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * MFB\CmsBundle\Entity\Gallery
  *
- * @ORM\Table(name="galleries")
+ * @ORM\Table(name="cms_galleries")
  * @ORM\Entity(repositoryClass="MFB\CmsBundle\Entity\Repository\GalleryRepository")
  */
 class Gallery
