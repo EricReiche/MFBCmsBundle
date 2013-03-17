@@ -39,4 +39,14 @@ class User extends AbstractUser
     {
         return $this->id;
     }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getFullname() ? $this->getFullname() : '';
+    }
 }

@@ -1,9 +1,12 @@
 <?php
 namespace MFB\CmsBundle\Admin;
 
+use MFB\CmsBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Form\FormMapper,
     Sonata\AdminBundle\Datagrid\ListMapper;
+
+use MFB\CmsBundle\Entity\News;
 
 /**
  * @category   MFB
@@ -29,6 +32,9 @@ class NewsAdmin extends Admin
      * @var string
      */
     protected $baseRoutePattern = '/news';
+
+    /** @var \Symfony\Component\Security\Core\SecurityContext */
+    protected $securityContext;
 
     /**
      * @param ListMapper $listMapper
@@ -75,5 +81,34 @@ class NewsAdmin extends Admin
                     . '</a>'
             )
         );
+    }
+
+    /**
+     * @param News $object
+     *
+     * @return News
+     */
+    public function prePersist($object)
+    {
+        if (!($object->getAuthor() instanceof User)) {
+            $user = $this->getSecurityContext()->getToken()->getUser();
+            $object->setAuthor($user);
+        }
+
+        return $object;
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
+     */
+    public function setSecurityContext($securityContext) {
+        $this->securityContext = $securityContext;
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\SecurityContext
+     */
+    public function getSecurityContext() {
+        return $this->securityContext;
     }
 }

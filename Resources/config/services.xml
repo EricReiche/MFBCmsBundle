@@ -76,6 +76,10 @@
             <argument>%mfb_cms.admin.news.entity%</argument>
             <argument/>
             <argument/>
+
+            <call method="setSecurityContext">
+                <argument type="service" id="security.context"/>
+            </call>
         </service>
 
         <service id="mfb_cms.admin.page" class="%mfb_cms.admin.page.class%">

@@ -105,7 +105,7 @@ class News
      */
     public function __toString()
     {
-        return $this->getTitle();
+        return $this->getTitle() ? $this->getTitle() : '';
     }
 
     /**
