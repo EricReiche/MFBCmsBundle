@@ -261,8 +261,69 @@ class GalleryService
         );
     }
 
+    /**
+     * @param string $content
+     * @return string
+     */
     public function parseContent($content)
     {
+        $gallery = function($matches) {
+//            $matches = array(
+//                '0' => '{{ imgGallery(News, 1, 150, 150) }}',
+//                '1' => 'imgGallery',
+//                '2' => 'News',
+//                '3' => '1',
+//                '4' => '150',
+//                '5' => '150',
+//            );
+            if (!isset($matches[1], $matches[2], $matches[3])) {
+                return $matches[0];
+            }
+            $width = null;
+            $height = null;
+            $type = $matches[2];
+            $id = $matches[3];
+            if (isset($matches[4])) {
+                $width = $matches[4];
+            }
+            if (isset($matches[5])) {
+                $height = $matches[5];
+            }
+            return $this->getGallery($type, $id, $width, $height);
+        };
+        $link = function($matches) {
+//            $matches = array(
+//                '0' => '{{ img(1, 150, 150) }}',
+//                '1' => 'img',
+//                '2' => '1',
+//                '3' => '150',
+//                '4' => '150',
+//            );
+            if (!isset($matches[1], $matches[2])) {
+                return $matches[0];
+            }
+            $width = null;
+            $height = null;
+            $id = $matches[2];
+            if (isset($matches[4])) {
+                $width = $matches[4];
+            }
+            if (isset($matches[5])) {
+                $height = $matches[5];
+            }
+            switch ($matches[1]) {
+                case 'img':
+                    return $this->getMediaUrl($id, $width, $height);
+                case 'imgLink':
+                    return $this->getMediaLink($id, $width, $height);
+                default:
+                    return $matches[0];
+            }
+        };
+
+        $content = preg_replace_callback('!\{\{\s*(imgGallery)\s*\(\s*([a-zA-Z]+),\s*(\d+)(?:,\s*(\d+),\s*(\d+)){0,1}\s*\)\s*\}\}!imsU', $gallery, $content);
+        $content = preg_replace_callback('!\{\{\s*(img|imgLink)\s*\(\s*(\d+)(?:,\s*(\d+),\s*(\d+)){0,1}\s*\)\s*\}\}!imsU', $link, $content);
+
         return $content;
     }
 }
