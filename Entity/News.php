@@ -4,8 +4,6 @@ namespace MFB\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM,
     Doctrine\Common\Collections\ArrayCollection;
 
-use Application\Sonata\UserBundle\Entity\User;
-
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -72,10 +70,10 @@ class News
     /**
      * @var User $author
      *
-     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $author;
+//    protected $author;
 
     /**
      * @var \datetime $releasedAt
