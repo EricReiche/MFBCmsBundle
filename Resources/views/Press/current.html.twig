@@ -20,9 +20,9 @@
     <h2>
         {{ pressrelease.title }}
     </h2>
-    <strong>{{ pressrelease.subTitle|raw }}</strong>
+    <strong>{{ pressrelease.subTitle | cmsrender }}</strong>
 
-    {{ pressrelease.teaser|raw }}
-    {{ include(template_from_string(pressrelease.content) }}
+    {{ pressrelease.teaser | cmsrender }}
+    {{ pressrelease.content | cmsrender }}
     {{ cmsblock('presscurrent_footer') }}
 {% endblock %}

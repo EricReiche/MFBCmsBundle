@@ -260,4 +260,9 @@ class GalleryService
             )
         );
     }
+
+    public function parseContent($content)
+    {
+        return $content;
+    }
 }

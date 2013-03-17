@@ -24,6 +24,7 @@
         "symfony/http-foundation": ">=2.2,<2.3-dev",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "sonata-project/formatter-bundle": "dev-master",
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
         "presta/sitemap-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "1.1.*@dev",

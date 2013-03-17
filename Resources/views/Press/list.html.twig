@@ -20,9 +20,9 @@
         <h4>
             {{ pressrelease.title }}
         </h4>
-        <strong>{{ pressrelease.subTitle|raw }}</strong>
+        <strong>{{ pressrelease.subTitle | cmsrender }}</strong>
 
-        {{ pressrelease.teaser|raw }}
+        {{ pressrelease.teaser | cmsrender }}
         <br/><br/>
     {% endfor %}
 {% endblock %}

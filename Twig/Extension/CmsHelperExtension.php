@@ -3,6 +3,8 @@
 namespace MFB\CmsBundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use \Sonata\FormatterBundle\Formatter\MarkdownFormatter;
+use MFB\CmsBundle\Service\GalleryService;
 
 /**
  * @category   MFB
@@ -18,6 +20,28 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CmsHelperExtension extends \Twig_Extension
 {
     /**
+     * @var MarkdownFormatter
+     */
+    protected $markdown;
+
+    /**
+     * @var GalleryService
+     */
+    protected $galleryService;
+
+    /**
+     * @param MarkdownFormatter $markdown
+     * @param GalleryService    $galleryService
+     *
+     * @return CmsHelperExtension
+     */
+    public function __construct(MarkdownFormatter $markdown, GalleryService $galleryService)
+    {
+        $this->galleryService = $galleryService;
+        $this->markdown = $markdown;
+    }
+
+    /**
      * Returns a list of functions.
      *
      * @return array
@@ -26,6 +50,18 @@ class CmsHelperExtension extends \Twig_Extension
     {
         return array(
             'classname' => new \Twig_Function_Method($this, 'getClassName')
+        );
+    }
+
+    /**
+     * Returns a list of functions.
+     *
+     * @return array
+     */
+    public function getFilters()
+    {
+        return array(
+            'cmsrender' => new \Twig_Filter_Method($this, 'cmsRender', array('is_safe' => array('html')))
         );
     }
 
@@ -43,6 +79,18 @@ class CmsHelperExtension extends \Twig_Extension
     }
 
     /**
+     * Apply multiple filters to CMS
+     *
+     * @param string $content
+     *
+     * @return string
+     */
+    public function cmsRender($content)
+    {
+        return $this->markdown->transform($this->galleryService->parseContent($content));
+    }
+
+    /**
      * Name of this extension
      *
      * @return string
@@ -53,4 +101,3 @@ class CmsHelperExtension extends \Twig_Extension
     }
 
 }
-

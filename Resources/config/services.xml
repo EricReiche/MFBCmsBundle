@@ -117,6 +117,8 @@
         </service>
 
         <service id="twig.extension.cms_helper" class="%mfb_cms.twig.cms_helper.extension.class%" public="true">
+            <argument type="service" id="sonata.formatter.text.markdown" />
+            <argument type="service" id="mfb_cms.service.gallery" />
             <tag name="twig.extension"/>
         </service>
 

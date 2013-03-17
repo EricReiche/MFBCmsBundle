@@ -20,8 +20,7 @@
     <h2>
         {{ news.title }}
     </h2>
-    <strong>{{ news.subTitle|raw }}</strong>
+    <strong>{{ news.subTitle | cmsrender }}</strong>
 
-    {{ include(template_from_string(news.content) }}
-    {#{{ include(template_from_string("{{ 'test' }}") }}#}
+    {{ news.content | cmsrender }}
 {% endblock %}
