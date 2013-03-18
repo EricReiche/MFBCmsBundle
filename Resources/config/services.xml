@@ -25,6 +25,9 @@
         <parameter key="mfb_cms.admin.news.class">MFB\CmsBundle\Admin\NewsAdmin</parameter>
         <parameter key="mfb_cms.admin.news.entity">MFB\CmsBundle\Entity\News</parameter>
 
+        <parameter key="mfb_cms.admin.category.class">MFB\CmsBundle\Admin\CategoryAdmin</parameter>
+        <parameter key="mfb_cms.admin.category.entity">MFB\CmsBundle\Entity\Category</parameter>
+
         <parameter key="mfb_cms.admin.page.class">MFB\CmsBundle\Admin\PageAdmin</parameter>
         <parameter key="mfb_cms.admin.page.entity">MFB\CmsBundle\Entity\Page</parameter>
 
@@ -80,6 +83,13 @@
             <call method="setSecurityContext">
                 <argument type="service" id="security.context"/>
             </call>
+        </service>
+
+        <service id="mfb_cms.admin.category" class="%mfb_cms.admin.category.class%">
+            <tag name="sonata.admin" manager_type="orm" group="CMS" label="Category"/>
+            <argument/>
+            <argument>%mfb_cms.admin.category.entity%</argument>
+            <argument/>
         </service>
 
         <service id="mfb_cms.admin.page" class="%mfb_cms.admin.page.class%">
