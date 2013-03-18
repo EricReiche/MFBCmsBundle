@@ -76,6 +76,14 @@ class News
     protected $author;
 
     /**
+     * @var Category $category
+     *
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+
+    /**
      * @var \datetime $releasedAt
      *
      * @ORM\Column(name="released_at", type="datetime")
@@ -304,5 +312,28 @@ class News
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Category $category
+     * @return Gallery
+     */
+    public function setCategory(Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }
