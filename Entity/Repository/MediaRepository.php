@@ -30,6 +30,7 @@ class MediaRepository extends EntityRepository
         if (!is_null($mediaType)) {
             $filter['type'] = $mediaType;
         }
+
         return $this->findBy($filter);
     }
 }

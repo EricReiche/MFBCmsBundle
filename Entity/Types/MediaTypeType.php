@@ -2,8 +2,6 @@
 
 namespace MFB\CmsBundle\Entity\Types;
 
-use Doctrine\DBAL\Platforms\AbstractPlatform;
-
 /**
  * @category   MFB
  * @package    MFBCmsBundle
@@ -57,6 +55,7 @@ class MediaTypeType extends AbstractType
             case static::PDF:
                 return static::$pdfTypes;
         }
+
         return array();
     }
 

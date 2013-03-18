@@ -2,8 +2,6 @@
 
 namespace MFB\CmsBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use MFB\CmsBundle\Service\CmsMenuService;
 
 /**
@@ -73,4 +71,3 @@ class CmsMenuExtension extends \Twig_Extension
     }
 
 }
-

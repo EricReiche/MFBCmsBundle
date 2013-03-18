@@ -2,8 +2,6 @@
 
 namespace MFB\CmsBundle\Entity\Types;
 
-use Doctrine\DBAL\Platforms\AbstractPlatform;
-
 /**
  * @category   MFB
  * @package    MFBCmsBundle

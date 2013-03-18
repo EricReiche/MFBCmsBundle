@@ -2,7 +2,6 @@
 
 namespace MFB\CmsBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use \Sonata\FormatterBundle\Formatter\MarkdownFormatter;
 use MFB\CmsBundle\Service\GalleryService;
 
@@ -75,6 +74,7 @@ class CmsHelperExtension extends \Twig_Extension
     public function getClassName($object)
     {
         $className = get_class($object);
+
         return substr($className, strrpos($className, '\\') + 1);
     }
 

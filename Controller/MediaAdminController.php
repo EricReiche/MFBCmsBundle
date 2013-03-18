@@ -3,19 +3,15 @@
 namespace MFB\CmsBundle\Controller;
 
 use MFB\CmsBundle\Entity\Types\MediaParentType;
-use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use MFB\CmsBundle\Form\UploadForm;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
 use MFB\CmsBundle\Entity\Gallery;
-use MFB\CmsBundle\Entity\Media;
 use MFB\CmsBundle\Service\SearchService;
 use MFB\CmsBundle\Service\GalleryService;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
@@ -73,7 +69,7 @@ class MediaAdminController extends Controller
         $repo = $em->getRepository($this->admin->getClass());
         $request = $this->getRequest();
         $type = $request->get('type');
-        $id = (int)$request->get('id');
+        $id = (int) $request->get('id');
 
         if (!in_array($type, MediaParentType::getValues()) || $id < 1) {
             return new Response('Error loading image chooser.', 500);

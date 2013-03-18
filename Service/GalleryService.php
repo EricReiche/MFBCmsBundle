@@ -106,18 +106,19 @@ class GalleryService
             $shortname = static::removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
             preg_match('!^(.+\_)(\d+)$!imsU', $shortname, $matches);
             if (isset($matches[2])) {
-                $fileName = $matches[1] . ((int)$matches[2] + 1) . $extension;
+                $fileName = $matches[1] . ((int) $matches[2] + 1) . $extension;
             } else {
                 $fileName = $shortname . '_2' . $extension;
             }
         }
+
         return $fileName;
     }
 
     /**
      * Remove any special characters
      *
-     * @param string $fileName
+     * @param  string $fileName
      * @return string
      */
     public static function removeSpecialChars($fileName)
@@ -170,6 +171,7 @@ class GalleryService
     public function loadImage($id)
     {
         $repo = $this->em->getRepository('MFBCmsBundle:Media');
+
         return $repo->find($id);
     }
 
@@ -251,6 +253,7 @@ class GalleryService
     public function getGallery($type, $id, $width, $height)
     {
         $gallery = $this->em->getRepository('MFBCmsBundle:Media')->findByType($type, $id, MediaTypeType::PICTURE);
+
         return $this->container->get('templating')->render(
             'MFBCmsBundle:Media:gallery.html.twig',
             array(
@@ -289,6 +292,7 @@ class GalleryService
             if (isset($matches[5])) {
                 $height = $matches[5];
             }
+
             return $this->getGallery($type, $id, $width, $height);
         };
         $link = function($matches) {

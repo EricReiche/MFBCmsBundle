@@ -4,7 +4,6 @@ namespace MFB\CmsBundle\Twig\Extension;
 
 use MFB\CmsBundle\Entity\Types\MediaParentType;
 use MFB\CmsBundle\Service\GalleryService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @category   MFB
@@ -90,10 +89,11 @@ class CmsMediaExtension extends \Twig_Extension
      */
     public function getImageGallery($type, $id, $width = null, $height = null)
     {
-        if (!in_array($type, MediaParentType::getValues()) || (int)$id < 1) {
+        if (!in_array($type, MediaParentType::getValues()) || (int) $id < 1) {
             return '<!-- error including gallery -->';
         }
-        return $this->galleryService->getGallery($type, (int)$id, $width, $height);
+
+        return $this->galleryService->getGallery($type, (int) $id, $width, $height);
     }
 
     /**
@@ -107,4 +107,3 @@ class CmsMediaExtension extends \Twig_Extension
     }
 
 }
-

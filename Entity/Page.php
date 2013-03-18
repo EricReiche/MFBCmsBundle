@@ -203,6 +203,7 @@ class Page
         if (is_null($this->releasedAt)) {
             $this->releasedAt = new \DateTime();
         }
+
         return $this->releasedAt;
     }
 

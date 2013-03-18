@@ -182,6 +182,7 @@ class MenuNode
         if (is_array($try)) {
             return $try;
         }
+
         return $this->linkArguments;
     }
 
@@ -190,6 +191,7 @@ class MenuNode
         if (is_array($linkArguments)) {
             $linkArguments = serialize($linkArguments);
         }
+
         return $this->linkArguments = $linkArguments;
     }
 }

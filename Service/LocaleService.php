@@ -26,6 +26,7 @@ class LocaleService
         if (!isset($countries[$name])) {
             return null;
         }
+
         return $countries[$name];
     }
     /**

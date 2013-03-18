@@ -2,8 +2,6 @@
 
 namespace MFB\CmsBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use MFB\CmsBundle\Service\CmsBlockService;
 
 /**
@@ -73,4 +71,3 @@ class CmsBlockExtension extends \Twig_Extension
     }
 
 }
-

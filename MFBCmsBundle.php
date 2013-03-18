@@ -31,8 +31,7 @@ class MFBCmsBundle extends Bundle
             //listen presta_sitemap.populate event
             $event->addListener(
                 \Presta\SitemapBundle\Event\SitemapPopulateEvent::onSitemapPopulate,
-                function (\Presta\SitemapBundle\Event\SitemapPopulateEvent $event) use ($router)
-                {
+                function (\Presta\SitemapBundle\Event\SitemapPopulateEvent $event) use ($router) {
                     // get absolute url
                     $url = $router->generate('pressrelease_list', array(), true);
                     // add url to the url-set
@@ -51,8 +50,7 @@ class MFBCmsBundle extends Bundle
             //listen presta_sitemap.populate event
             $event->addListener(
                 \Presta\SitemapBundle\Event\SitemapPopulateEvent::onSitemapPopulate,
-                function (\Presta\SitemapBundle\Event\SitemapPopulateEvent $event) use ($router)
-                {
+                function (\Presta\SitemapBundle\Event\SitemapPopulateEvent $event) use ($router) {
                     // get absolute url
                     $url = $router->generate('pressrelease_current', array(), true);
                     // add url to the url-set

@@ -55,10 +55,10 @@ class SearchService
             );
         /** @var News|Page|Block|Gallery|PressRelease $hit */
         foreach ($searchResult as $hit) {
-            $result['suggestions'][] = array('value' => (string)$hit, 'data' => $hit->getId());
+            $result['suggestions'][] = array('value' => (string) $hit, 'data' => $hit->getId());
         }
+
         return $result;
     }
-
 
 }

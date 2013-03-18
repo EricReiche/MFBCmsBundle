@@ -6,7 +6,6 @@ use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Datagrid\ListMapper;
 
 use MFB\CmsBundle\Entity\Gallery;
-use MFB\CmsBundle\Entity\Media;
 
 use MFB\CmsBundle\Entity\Types\GalleryTypeType,
     MFB\CmsBundle\Entity\Types\MediaParentType,

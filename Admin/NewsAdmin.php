@@ -101,14 +101,16 @@ class NewsAdmin extends Admin
     /**
      * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
      */
-    public function setSecurityContext($securityContext) {
+    public function setSecurityContext($securityContext)
+    {
         $this->securityContext = $securityContext;
     }
 
     /**
      * @return \Symfony\Component\Security\Core\SecurityContext
      */
-    public function getSecurityContext() {
+    public function getSecurityContext()
+    {
         return $this->securityContext;
     }
 }

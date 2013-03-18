@@ -6,7 +6,6 @@ use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use MFB\CmsBundle\Entity\MenuNode;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
@@ -99,6 +98,7 @@ class MenuAdminController extends Controller
             return new Response(json_encode(false));
         }
         $em->flush();
+
         return new Response(json_encode(array('key' => $newNode->getId())));
     }
 
@@ -133,7 +133,7 @@ class MenuAdminController extends Controller
         $mode = $request->get('mode');
 
         if (!is_null($active)) {
-            $node->setActive((bool)$active);
+            $node->setActive((bool) $active);
             $em->persist($node);
         }
         if (!is_null($targetId) && !is_null($mode)) {
@@ -228,7 +228,6 @@ class MenuAdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($this->admin->getClass());
         $node = $repo->find($id);
-
 
         foreach ($this->get('mfb_cms.service.cms_menu')->loadAllChildren($node) as $child) {
             $repo->removeFromTree($child);
