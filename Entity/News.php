@@ -286,12 +286,13 @@ class News
      * Set author
      *
      * @param User $author
+     *
      * @return News
      */
     public function setAuthor(User $author = null)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 

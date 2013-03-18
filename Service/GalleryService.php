@@ -7,7 +7,6 @@ use Imagine\Image\Box;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use MFB\CmsBundle\Entity\Gallery;
@@ -95,6 +94,7 @@ class GalleryService
      * Make sure the file doesn't exist yet (or rename it)
      *
      * @param string $fileName
+     *
      * @return string
      */
     public static function cleanFileName($fileName)
@@ -266,6 +266,7 @@ class GalleryService
 
     /**
      * @param string $content
+     *
      * @return string
      */
     public function parseContent($content)

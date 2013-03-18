@@ -8,7 +8,6 @@ use MFB\CmsBundle\Entity\MenuNode;
 use Doctrine\ORM\EntityManager;
 
 use MFB\CmsBundle\Entity\Types\MenuNodeLinkTypeType;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
  * @category   MFB
