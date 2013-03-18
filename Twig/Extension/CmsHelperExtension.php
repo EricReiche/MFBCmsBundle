@@ -2,6 +2,7 @@
 
 namespace MFB\CmsBundle\Twig\Extension;
 
+use MFB\CmsBundle\Entity\Types\MediaParentType;
 use \Sonata\FormatterBundle\Formatter\MarkdownFormatter;
 use MFB\CmsBundle\Service\GalleryService;
 
@@ -48,7 +49,8 @@ class CmsHelperExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'classname' => new \Twig_Function_Method($this, 'getClassName')
+            'classname' => new \Twig_Function_Method($this, 'getClassName'),
+            'uploadEnabled' => new \Twig_Function_Method($this, 'isUploadEnabled')
         );
     }
 
@@ -76,6 +78,20 @@ class CmsHelperExtension extends \Twig_Extension
         $className = get_class($object);
 
         return substr($className, strrpos($className, '\\') + 1);
+    }
+
+    /**
+     * Check if upload is enabled for this entity
+     *
+     * @param object $object
+     *
+     * @return string
+     */
+    public function isUploadEnabled($object)
+    {
+        $className = get_class($object);
+
+        return in_array($className, MediaParentType::getValues());
     }
 
     /**

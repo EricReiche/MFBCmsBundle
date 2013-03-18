@@ -44,6 +44,7 @@ class NewsAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('releasedAt')
+            ->add('category')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -63,6 +64,7 @@ class NewsAdmin extends Admin
             ->add('title', null, array('required' => true))
             ->add('subTitle', null, array('required' => false))
             ->add('active', null, array('required' => false))
+            ->add('category', null, array('required' => true))
             ->add('content', null, array(
                 'required' => false,
                 'attr' => array(

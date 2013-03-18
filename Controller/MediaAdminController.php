@@ -72,7 +72,7 @@ class MediaAdminController extends Controller
         $id = (int) $request->get('id');
 
         if (!in_array($type, MediaParentType::getValues()) || $id < 1) {
-            return new Response('Error loading image chooser.', 500);
+            return new Response('');
         }
 
         return $this->render(

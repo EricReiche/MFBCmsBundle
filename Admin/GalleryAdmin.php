@@ -45,6 +45,7 @@ class GalleryAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title')
+            ->add('category')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -60,6 +61,7 @@ class GalleryAdmin extends Admin
         $formMapper
             ->with('General')
             ->add('title', null, array('required' => true))
+            ->add('category', null, array('required' => true))
             ->add('description', null, array('required' => true))
             ->add('type', 'choice', array(
                 'label' => 'Type',

@@ -18,15 +18,17 @@
 
 {% block sonata_admin_right_sidebar %}
     <div class="right-sidebar span4">
-        {% if admin.id(object) %}
-            {% include 'MFBCmsBundle:MediaAdmin:upload.html.twig'
-                with {'object': object}
-            %}
-            <div id="filechooser">
-                {% render fileChooser %}
-            </div>
-        {% else %}
-            {{ "Uploading enabled after save"|trans }}
+        {% if uploadEnabled(object) %}
+            {% if admin.id(object) %}
+                {% include 'MFBCmsBundle:MediaAdmin:upload.html.twig'
+                    with {'object': object}
+                %}
+                <div id="filechooser">
+                    {% render fileChooser %}
+                </div>
+            {% else %}
+                {{ "Uploading enabled after save"|trans }}
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}
