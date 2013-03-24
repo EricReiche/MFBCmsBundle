@@ -94,15 +94,19 @@ class GalleryService
      * Make sure the file doesn't exist yet (or rename it)
      *
      * @param string $fileName
+     * @param string $dir
      *
      * @return string
      */
-    public static function cleanFileName($fileName)
+    public static function cleanFileName($fileName, $dir = null)
     {
+        if (is_null($dir)) {
+            $dir = static::getUploadPath() . static::ORIG_DIR;
+        }
         $extension = '.' . strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
         $shortname = static::removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
         $fileName = $shortname . $extension;
-        while (file_exists(static::getUploadPath() . static::ORIG_DIR . $fileName)) {
+        while (file_exists($dir . $fileName)) {
             $shortname = static::removeSpecialChars(pathinfo($fileName, PATHINFO_FILENAME));
             preg_match('!^(.+\_)(\d+)$!imsU', $shortname, $matches);
             if (isset($matches[2])) {

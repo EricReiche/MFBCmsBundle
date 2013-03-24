@@ -38,6 +38,7 @@ class PageAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('releasedAt')
+            ->add('slug')
             ->add('active', null, array('required' => false))
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -55,6 +56,7 @@ class PageAdmin extends Admin
             ->with('General')
             ->add('releasedAt', null, array('required' => true))
             ->add('title', null, array('required' => true))
+            ->add('slug', null, array('required' => false, 'attr' => array('readonly' => true)))
             ->add('active', null, array('required' => false))
             ->add('content', null, array('required' => true))
             ->end();
