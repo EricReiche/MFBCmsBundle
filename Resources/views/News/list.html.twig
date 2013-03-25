@@ -16,7 +16,7 @@
 {% block content %}
     {% for post in news %}
         <h4>
-            <a href="{{ path('news_show', {'id': post.id}) }}">{{ post.title }}</a>
+            <a href="{{ path('news_show', {'news': post.slug}) }}">{{ post.title }}</a>
         </h4>
         <strong>{{ post.subTitle | cmsrender }}</strong>
         <br/>
