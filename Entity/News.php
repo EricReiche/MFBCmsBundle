@@ -56,7 +56,7 @@ class News
      * @var string $slug
      *
      * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"title"})
+     * @Gedmo\Slug(fields={"title","id"})
      */
     protected $slug;
 

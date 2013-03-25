@@ -27,7 +27,7 @@
         "sonata-project/formatter-bundle": "dev-master",
         "r1pp3rj4ck/TwigstringBundle": "dev-master",
         "presta/sitemap-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "1.1.*@dev",
+        "stof/doctrine-extensions-bundle": "dev-master",
         "phpexiftool/phpexiftool": "dev-master",
         "imagine/Imagine": "dev-master"
     },
