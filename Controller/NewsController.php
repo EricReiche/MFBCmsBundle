@@ -30,14 +30,16 @@ class NewsController extends Controller
      */
     public function listAction()
     {
+        /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        /** @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            'SELECT n,c FROM MFBCmsBundle:News n LEFT JOIN n.category c WHERE n.active = 1 ORDER BY n.releasedAt DESC'
-        );
-        $query->execute();
+        $qb = $em->getRepository('MFBCmsBundle:News')->createQueryBuilder('n');
 
-        $news = $query->getResult();
+        $qb->setMaxResults(10)
+            ->leftJoin('n.category', 'c')
+            ->andWhere('n.active = 1')
+            ->orderBy('n.releasedAt', 'DESC');
+
+        $news = $qb->getQuery()->getResult();
 
         return array('news' => $news);
     }
