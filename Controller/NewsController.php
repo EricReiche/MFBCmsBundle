@@ -33,7 +33,7 @@ class NewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            'SELECT n FROM MFBCmsBundle:News n WHERE n.active = 1 ORDER BY n.releasedAt DESC'
+            'SELECT n,c FROM MFBCmsBundle:News n LEFT JOIN n.category c WHERE n.active = 1 ORDER BY n.releasedAt DESC'
         );
         $query->execute();
 
