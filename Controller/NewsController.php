@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -45,17 +46,12 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("news/show/{id}", name="news_show")
+     * @Route("news/show/{news}", name="news_show")
+     * @ParamConverter("news", options={"mapping": {"news": "slug"}})
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(News $news)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $repo = $em->getRepository('MFBCmsBundle:News');
-        /** @var News $news */
-        $news = $repo->find($id);
-
         if ($news->getActive() != true) {
             throw new NotFoundHttpException;
         }
