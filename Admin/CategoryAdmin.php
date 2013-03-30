@@ -4,6 +4,7 @@ namespace MFB\CmsBundle\Admin;
 use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Form\FormMapper,
     Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 /**
  * @category   MFB
@@ -29,6 +30,12 @@ class CategoryAdmin extends Admin
      * @var string
      */
     protected $baseRoutePattern = 'cms/category';
+
+    protected $datagridValues = array(
+        '_page'       => 1,
+        '_sort_order' => 'ASC', // sort direction
+        '_sort_by' => 'lft' // field name
+    );
 
     /**
      * @param ListMapper $listMapper
