@@ -38,6 +38,7 @@ class CategoryAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('active')
+            ->add('parent')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -54,6 +55,7 @@ class CategoryAdmin extends Admin
             ->with('General')
             ->add('title', null, array('required' => true))
             ->add('active', null, array('required' => false))
+            ->add('parent', null, array('required' => false))
             ->end();
     }
 }
