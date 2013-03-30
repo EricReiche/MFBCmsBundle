@@ -34,7 +34,7 @@ class CategoryAdmin extends Admin
     protected $datagridValues = array(
         '_page'       => 1,
         '_sort_order' => 'ASC', // sort direction
-        '_sort_by' => 'lft' // field name
+        '_sort_by' => 'root, lft' // field name
     );
 
     /**
@@ -64,5 +64,21 @@ class CategoryAdmin extends Admin
             ->add('active', null, array('required' => false))
             ->add('parent', null, array('required' => false))
             ->end();
+    }
+
+    /**
+     * @param string $context
+     * @return \Sonata\AdminBundle\Datagrid\ProxyQueryInterface|\Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery
+     */
+    public function createQuery($context = 'list')
+    {
+        $repository = $this->getModelManager()->getEntityManager($this->getClass())->getRepository($this->getClass());
+
+        //somehow need to order by parent id, but doesnt seem to work this way
+        $repository = $repository->createQueryBuilder('c')
+            ->addOrderBy('c.root')
+            ->addOrderBy('c.lft');
+
+        return new ProxyQuery($repository);
     }
 }
