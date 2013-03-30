@@ -29,7 +29,8 @@
         "presta/sitemap-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "dev-master",
         "phpexiftool/phpexiftool": "dev-master",
-        "imagine/Imagine": "dev-master"
+        "imagine/Imagine": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master"
     },
     "target-dir": "MFB/CmsBundle",
     "autoload": {
