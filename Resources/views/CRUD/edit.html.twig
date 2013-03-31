@@ -7,28 +7,16 @@
 
     <script src="{{ asset('bundles/mfbcms/js/dropzone.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/mfbcms/js/filechooser.js') }}" type="text/javascript"></script>
-    <script type="text/javascript">
-        var fileChooserUrl = "{{ fileChooser|raw }}";
-    </script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/mfbcms/css/admin.css') }}" type="text/css" media="all">
 {% endblock%}
 
-{% block sonata_admin_right_sidebar %}
-    <div class="right-sidebar span4">
-        {% if uploadEnabled(object) %}
-            {% if admin.id(object) %}
-                {% include 'MFBCmsBundle:MediaAdmin:upload.html.twig'
-                    with {'object': object}
-                %}
-                <div id="filechooser">
-                    {% render fileChooser %}
-                </div>
-            {% else %}
-                {{ "Uploading enabled after save"|trans }}
-            {% endif %}
-        {% endif %}
-    </div>
+
+{% block side_menu %}
+    {{ parent() }}
+    {% include 'MFBCmsBundle:MediaAdmin:upload.html.twig'
+        with {'object': object, 'fileChooser': fileChooser}
+    %}
 {% endblock %}

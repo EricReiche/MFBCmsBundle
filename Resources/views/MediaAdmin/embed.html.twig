@@ -1,6 +1,7 @@
 <div class="addGallery">
-    <img onclick="addGallery({{ id }}, '{{ type }}')" src="{{ asset('bundles/mfbcms/images/gallery_80.jpg') }}" style="width:50px;"  alt="{{ 'Add gallery'|trans}}" />
+    <button class="btn btn-primary" onclick="addGallery({{ id }}, '{{ type }}');$('#gallerymodal').modal('hide');return false;" >{{ 'Add gallery'|trans}}</button>
 </div>
+<br/>
 {% for file in files %}
     <div class="image">
         <img onclick="addImage({{ file.id }})" src="{{ asset('bundles/sonataadmin/famfamfam/image_add.png') }}"  alt="{{ 'Add thumbnail'|trans}}" />

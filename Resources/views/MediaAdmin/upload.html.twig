@@ -1,5 +1,59 @@
-<form action="{{ path('admin_mfb_cms_media_ajax_upload') }}" id="media-dropzone" class="dropzone">
-    <input type="hidden" name="type" value="{{ classname(object) }}"/>
-    <input type="hidden" name="parentId" value="{{ admin.id(object) }}"/>
-    <div class="default message"><span>{{ "Drop files here to upload"|trans }}</span></div>
-</form>
+<div class="popup">
+    {% if uploadEnabled(object) %}
+        {% if admin.id(object) %}
+            <!-- Button to trigger modal -->
+            <a href="#gallerymodal" role="button" class="btn" data-toggle="modal">{{ "Gallery"|trans }}</a>
+
+            <!-- Modal -->
+            <div id="gallerymodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="gallerymodalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">{{ "Gallery"|trans }}</h3>
+                </div>
+                <div class="modal-body">
+
+                    <ul class="nav nav-tabs" id="galleryTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#gallery-tab-upload">{{ "Upload"|trans }}</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#gallery-tab-chooser">{{ "Insert"|trans }}</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="galleryTabContent">
+                        <div class="tab-pane active" id="gallery-tab-upload">
+                            <form action="{{ path('admin_mfb_cms_media_ajax_upload') }}" id="media-dropzone" class="dropzone">
+                                <input type="hidden" name="type" value="{{ classname(object) }}"/>
+                                <input type="hidden" name="parentId" value="{{ admin.id(object) }}"/>
+                                <div class="default message"><span>{{ "Drop files here to upload"|trans }}</span></div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="gallery-tab-chooser">
+                            <div id="filechooser">
+                                {% render fileChooser %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        $(function () {
+                            $('#galleryTab a:first').tab('show');
+                        })
+                    </script>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" id="close-gallery-modal">{{ "Close"|trans }}</button>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                var fileChooserUrl = "{{ fileChooser|raw }}";
+            </script>
+        {% else %}
+            {{ "Uploading enabled after save"|trans }}
+        {% endif %}
+    {% endif %}
+</div>

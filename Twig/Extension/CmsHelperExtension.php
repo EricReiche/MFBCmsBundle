@@ -89,7 +89,7 @@ class CmsHelperExtension extends \Twig_Extension
      */
     public function isUploadEnabled($object)
     {
-        $className = get_class($object);
+        $className = $this->getClassName($object);
 
         return in_array($className, MediaParentType::getValues());
     }
