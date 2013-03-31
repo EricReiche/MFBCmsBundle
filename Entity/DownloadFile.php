@@ -55,7 +55,7 @@ class DownloadFile
     /**
      * @var DownloadEntry
      *
-     * @ORM\ManyToOne(targetEntity="DownloadEntry")
+     * @ORM\ManyToOne(targetEntity="DownloadEntry",cascade={"persist"})
      * @ORM\JoinColumn(name="entry_id", referencedColumnName="id")
      */
     private $entry;

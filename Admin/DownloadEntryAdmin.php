@@ -73,6 +73,11 @@ class DownloadEntryAdmin extends Admin
             ->add('category', null, array('required' => true))
             ->add('description', null, array('required' => true))
             ->add('author', null, array('required' => true))
+            ->add('files', 'sonata_type_collection', array(), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable'  => 'position'
+            ))
             ->end();
     }
 

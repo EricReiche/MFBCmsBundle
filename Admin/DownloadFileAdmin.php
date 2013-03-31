@@ -58,10 +58,14 @@ class DownloadFileAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        if (!$this->isChild()) {
+            $formMapper ->add('entry', null, array('required' => true));
+        }
+
         $formMapper
             ->with('General')
             ->add('title', null, array('required' => true))
-            ->add('entry', null, array('required' => true))
             ->add('active', null, array('required' => false))
             ->add('type', null, array('required' => true))
             ->add('url', null, array('required' => true))

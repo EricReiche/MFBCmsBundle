@@ -120,7 +120,7 @@
         </service>
 
         <service id="mfb_cms.admin.download_file" class="%mfb_cms.admin.download_file.class%">
-            <tag name="sonata.admin" manager_type="orm" group="Download" label="Files"/>
+            <tag name="sonata.admin" manager_type="orm" show_in_dashboard="false"/>
             <argument/>
             <argument>%mfb_cms.admin.download_file.entity%</argument>
             <argument/>

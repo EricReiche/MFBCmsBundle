@@ -2,6 +2,7 @@
 
 namespace MFB\CmsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -121,6 +122,13 @@ class DownloadEntry
     protected $updatedAt;
 
     /**
+     * @var DownloadFile[]
+     *
+     * @ORM\OneToMany(targetEntity="DownloadFile", mappedBy="entry", cascade={"persist"})
+     */
+    private $files;
+
+    /**
      * Get title
      *
      * @return string
@@ -128,6 +136,13 @@ class DownloadEntry
     public function __toString()
     {
         return $this->getTitle() ? $this->getTitle() : '';
+    }
+
+    /**
+     * @return DownloadEntry
+     */
+    public function __construct() {
+        $this->files = new ArrayCollection();
     }
 
     /**
@@ -470,5 +485,38 @@ class DownloadEntry
     public function getVoteSum()
     {
         return $this->voteSum;
+    }
+
+    /**
+     * Add files
+     *
+     * @param DownloadFile $files
+     * @return DownloadEntry
+     */
+    public function addFile(DownloadFile $files)
+    {
+        $this->files[] = $files;
+    
+        return $this;
+    }
+
+    /**
+     * Remove files
+     *
+     * @param DownloadFile $files
+     */
+    public function removeFile(DownloadFile $files)
+    {
+        $this->files->removeElement($files);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }
