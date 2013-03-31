@@ -68,6 +68,7 @@ class CategoryAdmin extends Admin
 
     /**
      * @param string $context
+     *
      * @return \Sonata\AdminBundle\Datagrid\ProxyQueryInterface|\Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery
      */
     public function createQuery($context = 'list')

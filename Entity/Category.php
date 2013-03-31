@@ -120,7 +120,7 @@ class Category
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -131,19 +131,20 @@ class Category
      * Set title
      *
      * @param string $title
+     *
      * @return Category
      */
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -154,19 +155,20 @@ class Category
      * Set slug
      *
      * @param string $slug
+     *
      * @return Category
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -177,19 +179,20 @@ class Category
      * Set active
      *
      * @param boolean $active
+     *
      * @return Category
      */
     public function setActive($active)
     {
         $this->active = $active;
-    
+
         return $this;
     }
 
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -200,19 +203,20 @@ class Category
      * Set createdAt
      *
      * @param \DateTime $createdAt
+     *
      * @return Category
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -223,45 +227,61 @@ class Category
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
+     *
      * @return Category
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @return int
+     */
     public function getLft()
     {
         return $this->lft;
     }
 
+    /**
+     * @return int
+     */
     public function getRoot()
     {
         return $this->root;
     }
 
+    /**
+     * @return int
+     */
     public function getRgt()
     {
         return $this->rgt;
     }
 
+    /**
+     * @param Category $parent
+     */
     public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
     }
 
+    /**
+     * @return int
+     */
     public function getParent()
     {
         return $this->parent;

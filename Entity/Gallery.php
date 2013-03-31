@@ -257,12 +257,13 @@ class Gallery
      * Set category
      *
      * @param Category $category
+     *
      * @return Gallery
      */
     public function setCategory(Category $category = null)
     {
         $this->category = $category;
-    
+
         return $this;
     }
 

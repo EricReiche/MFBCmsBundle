@@ -318,6 +318,7 @@ class News
      * Set category
      *
      * @param Category $category
+     *
      * @return Gallery
      */
     public function setCategory(Category $category = null)
