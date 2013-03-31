@@ -1,8 +1,8 @@
 <?php
+
 namespace MFB\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM,
-    Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,13 +15,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  *
- * MFB\CmsBundle\Entity\Category
- *
- * @ORM\Table(name="cms_categories")
- * @ORM\Entity()
+ * @ORM\Table(name="cms_download_categories")
+ * @ORM\Entity
  * @Gedmo\Tree(type="nested")
  */
-class Category
+class DownloadCategory
 {
     /**
      * @var integer $id
@@ -96,13 +94,13 @@ class Category
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="DownloadCategory", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="DownloadCategory", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
@@ -132,7 +130,7 @@ class Category
      *
      * @param string $title
      *
-     * @return Category
+     * @return DownloadCategory
      */
     public function setTitle($title)
     {
@@ -156,7 +154,7 @@ class Category
      *
      * @param string $slug
      *
-     * @return Category
+     * @return DownloadCategory
      */
     public function setSlug($slug)
     {
@@ -180,7 +178,7 @@ class Category
      *
      * @param boolean $active
      *
-     * @return Category
+     * @return DownloadCategory
      */
     public function setActive($active)
     {
@@ -204,7 +202,7 @@ class Category
      *
      * @param \DateTime $createdAt
      *
-     * @return Category
+     * @return DownloadCategory
      */
     public function setCreatedAt($createdAt)
     {
@@ -228,7 +226,7 @@ class Category
      *
      * @param \DateTime $updatedAt
      *
-     * @return Category
+     * @return DownloadCategory
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -272,9 +270,9 @@ class Category
     }
 
     /**
-     * @param Category $parent
+     * @param DownloadCategory $parent
      */
-    public function setParent(Category $parent = null)
+    public function setParent(DownloadCategory $parent = null)
     {
         $this->parent = $parent;
     }
@@ -285,5 +283,112 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set lft
+     *
+     * @param integer $lft
+     *
+     * @return DownloadCategory
+     */
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+    
+        return $this;
+    }
+
+    /**
+     * Set lvl
+     *
+     * @param integer $lvl
+     *
+     * @return DownloadCategory
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+    
+        return $this;
+    }
+
+    /**
+     * Get lvl
+     *
+     * @return integer 
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @param integer $rgt
+     *
+     * @return DownloadCategory
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+    
+        return $this;
+    }
+
+    /**
+     * Set root
+     *
+     * @param integer $root
+     *
+     * @return DownloadCategory
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    
+        return $this;
+    }
+
+    /**
+     * Add children
+     *
+     * @param DownloadCategory $children
+     *
+     * @return DownloadCategory
+     */
+    public function addChildren(DownloadCategory $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param DownloadCategory $children
+     */
+    public function removeChildren(DownloadCategory $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

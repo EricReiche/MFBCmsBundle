@@ -1,8 +1,8 @@
 <?php
+
 namespace MFB\CmsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM,
-    Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -17,35 +17,48 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * MFB\CmsBundle\Entity\Category
  *
- * @ORM\Table(name="cms_categories")
+ * @ORM\Table(name="cms_download_files")
  * @ORM\Entity()
- * @Gedmo\Tree(type="nested")
  */
-class Category
+class DownloadFile
 {
     /**
-     * @var integer $id
+     * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @var string $title
+     * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
-    protected $title;
+    private $title;
 
     /**
-     * @var string $slug
+     * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="type", type="string", length=20)
      */
-    protected $slug;
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @var DownloadEntry
+     *
+     * @ORM\ManyToOne(targetEntity="DownloadEntry")
+     * @ORM\JoinColumn(name="entry_id", referencedColumnName="id")
+     */
+    private $entry;
 
     /**
      * @var string $active
@@ -71,43 +84,6 @@ class Category
     protected $updatedAt;
 
     /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $lft;
-
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
-     */
-    private $lvl;
-
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $rgt;
-
-    /**
-     * @Gedmo\TreeRoot
-     * @ORM\Column(name="root", type="integer", nullable=true)
-     */
-    private $root;
-
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
-     */
-    private $children;
-
-    /**
      * Get title
      *
      * @return string
@@ -116,11 +92,10 @@ class Category
     {
         return $this->getTitle() ? $this->getTitle() : '';
     }
-
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -131,20 +106,19 @@ class Category
      * Set title
      *
      * @param string $title
-     *
-     * @return Category
+     * @return DownloadFile
      */
     public function setTitle($title)
     {
         $this->title = $title;
-
+    
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -152,27 +126,72 @@ class Category
     }
 
     /**
-     * Set slug
+     * Set type
      *
-     * @param string $slug
-     *
-     * @return Category
+     * @param string $type
+     * @return DownloadFile
      */
-    public function setSlug($slug)
+    public function setType($type)
     {
-        $this->slug = $slug;
-
+        $this->type = $type;
+    
         return $this;
     }
 
     /**
-     * Get slug
+     * Get type
      *
-     * @return string
+     * @return string 
      */
-    public function getSlug()
+    public function getType()
     {
-        return $this->slug;
+        return $this->type;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return DownloadFile
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set entry
+     *
+     * @param string $entry
+     * @return DownloadFile
+     */
+    public function setEntry($entry)
+    {
+        $this->entry = $entry;
+    
+        return $this;
+    }
+
+    /**
+     * Get entry
+     *
+     * @return string 
+     */
+    public function getEntry()
+    {
+        return $this->entry;
     }
 
     /**
@@ -245,45 +264,5 @@ class Category
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLft()
-    {
-        return $this->lft;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRoot()
-    {
-        return $this->root;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRgt()
-    {
-        return $this->rgt;
-    }
-
-    /**
-     * @param Category $parent
-     */
-    public function setParent(Category $parent = null)
-    {
-        $this->parent = $parent;
-    }
-
-    /**
-     * @return int
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 }

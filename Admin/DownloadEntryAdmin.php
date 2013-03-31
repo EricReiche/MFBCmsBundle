@@ -5,8 +5,9 @@ use MFB\CmsBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin,
     Sonata\AdminBundle\Form\FormMapper,
     Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-use MFB\CmsBundle\Entity\News;
+use MFB\CmsBundle\Entity\DownloadEntry;
 
 /**
  * @category   MFB
@@ -17,21 +18,26 @@ use MFB\CmsBundle\Entity\News;
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link       https://github.com/meinfernbusde/MFBCmsBundle
  */
-class NewsAdmin extends Admin
+class DownloadEntryAdmin extends Admin
 {
     /**
      * The label class name  (used in the title/breadcrumb ...)
      *
      * @var string
      */
-    protected $classnameLabel = 'news';
+    protected $classnameLabel = 'download_entry';
 
     /**
      * The base route pattern used to generate the routing information
      *
      * @var string
      */
-    protected $baseRoutePattern = '/news';
+    protected $baseRoutePattern = 'cms/download/entry';
+
+    /**
+     * @var \Symfony\Component\Security\Core\SecurityContext
+     */
+    protected $securityContext;
 
     protected $datagridValues = array(
         '_page'       => 1,
@@ -40,23 +46,17 @@ class NewsAdmin extends Admin
     );
 
     /**
-     * @var \Symfony\Component\Security\Core\SecurityContext
-     */
-    protected $securityContext;
-
-    /**
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('releasedAt')
+            ->add('active')
             ->add('category')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
-                    'delete' => array(),
                 )
             ));
     }
@@ -68,41 +68,24 @@ class NewsAdmin extends Admin
     {
         $formMapper
             ->with('General')
-            ->add('releasedAt', null, array('required' => true))
             ->add('title', null, array('required' => true))
-            ->add('subTitle', null, array('required' => false))
             ->add('active', null, array('required' => false))
             ->add('category', null, array('required' => true))
-            ->add('content', null, array(
-                'required' => false,
-                'attr' => array(
-                    'class'      => 'wysiwyg',
-                    'data-theme' => 'advanced'
-                )
-            ))
+            ->add('description', null, array('required' => true))
+            ->add('author', null, array('required' => true))
             ->end();
-        $formMapper->setHelps(array(
-                'content' =>
-                $this->trans('Formatting with markdown & html. See ')
-                    . '<a target="_blank" href="http://'
-                    . $this->trans('daringfireball.net/projects/markdown/basics')
-                    . '">'
-                    . $this->trans('help')
-                    . '</a>'
-            )
-        );
     }
 
     /**
-     * @param News $object
+     * @param DownloadEntry $object
      *
-     * @return News
+     * @return DownloadEntry
      */
     public function prePersist($object)
     {
-        if (!($object->getAuthor() instanceof User)) {
+        if (!($object->getUploader() instanceof User)) {
             $user = $this->getSecurityContext()->getToken()->getUser();
-            $object->setAuthor($user);
+            $object->setUploader($user);
         }
 
         return $object;

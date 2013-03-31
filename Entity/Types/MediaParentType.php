@@ -29,6 +29,7 @@ class MediaParentType extends AbstractType
     const NEWS = 'News';
     const PAGE = 'Page';
     const PRESS = 'PressRelease';
+    const DOWNLOAD = 'DownloadEntry';
     const GAME = 'Game';
 
     /**
@@ -40,6 +41,7 @@ class MediaParentType extends AbstractType
         self::NEWS => 'News',
         self::PAGE => 'Page',
         self::PRESS => 'Pressrelease',
+        self::DOWNLOAD => 'DownloadEntry',
         // @todo add this via event
         self::GAME => 'Game',
     );
