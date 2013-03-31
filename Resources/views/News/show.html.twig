@@ -16,13 +16,16 @@
 
 {% block content %}
 
-    <strong>{{ "News from"|trans }} {{ news.releasedAt|date("d.m.Y") }}</strong>
-    <h2>
-        {{ news.title }}
-    </h2>
-    <strong>{{ news.subTitle | cmsrender }}</strong>
+    <strong>{{ "News from"|trans }} <time>{{ news.releasedAt|date("d.m.Y") }}</time></strong>
+    <div class="category">{{ post.category.title }}</div>
+    <h2>{{ news.title }}</h2>
+    <summary><strong>{{ news.subTitle | cmsrender }}</strong></summary>
 
-    {{ news.content | cmsrender }}<br/><br/>
+    <article>{{ news.content | cmsrender }}</article><br/><br/>
 
     by {{ news.author.username }}
+
+    <hr/>
+
+
 {% endblock %}
