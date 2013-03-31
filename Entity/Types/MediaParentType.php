@@ -29,6 +29,7 @@ class MediaParentType extends AbstractType
     const NEWS = 'News';
     const PAGE = 'Page';
     const PRESS = 'PressRelease';
+    const GAME = 'Game';
 
     /**
      * @var array
@@ -39,6 +40,8 @@ class MediaParentType extends AbstractType
         self::NEWS => 'News',
         self::PAGE => 'Page',
         self::PRESS => 'Pressrelease',
+        // @todo add this via event
+        self::GAME => 'Game',
     );
 
     /**
