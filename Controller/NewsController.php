@@ -23,6 +23,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class NewsController extends Controller
 {
+    const PAGER_LIMIT = 10;
 
     /**
      * @Route("news/archiv", name="news_archive")
@@ -31,18 +32,28 @@ class NewsController extends Controller
      */
     public function listAction()
     {
+        $page = $this->getRequest()->get('page', 1);
+        if (!is_numeric($page)) {
+            $page = 1;
+        }
+
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('MFBCmsBundle:News')->createQueryBuilder('n');
 
-        $qb->setMaxResults(10)
+        $qb
             ->leftJoin('n.category', 'c')
             ->andWhere('n.active = 1')
             ->orderBy('n.releasedAt', 'DESC');
 
-        $news = $qb->getQuery()->getResult();
+        $query = $qb->getQuery();
 
-        return array('news' => $news);
+        $paginator = $this->get('knp_paginator');
+        /** @var \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination $news */
+        $news = $paginator->paginate($query, $page, self::PAGER_LIMIT);
+        $firstItem = current($news->getItems());
+
+        return array('news' => $news, 'firstItem' => $firstItem);
     }
 
     /**
